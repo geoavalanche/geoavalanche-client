@@ -3,6 +3,7 @@ const ReactDOM = require('react-dom');
 const ol = require('openlayers');
 const Button = require('react-bootstrap').Button;
 const Glyphicon = require('react-bootstrap').Glyphicon;
+import SearchAddress from './components/SearchAddress';
 
 var geometryName_ = 'the_geom';
 var srsName_ = 'EPSG:3857';
@@ -39,7 +40,7 @@ var vectorStyleFunction = function(feature) {
         color: 'red'
       })
     });
-	}
+  }
   if (properties.DANGERINDEX === '2') {
     style = new ol.style.Style({
       stroke: new ol.style.Stroke({
@@ -241,6 +242,97 @@ var saveFeature = function(feature) {
     });
 }
 
+var onSelectAddress = function(lat, lng){
+  if (window.console) console.log("onSelectAddress()", "latitude", lat, "longitude", lng);
+  map.addInteraction(select_);
+  //map.addInteraction(modify_);
+
+  var coord = ol.proj.transform([lng, lat], 'EPSG:4326', 'EPSG:3857');
+  if (window.console) console.log("onSelectAddress()", "coordinate", coord);
+  var thePoint = new ol.geom.Point(coord);
+  var feature = new ol.Feature();
+  feature.setGeometryName(geometryName_);
+  feature.setGeometry(thePoint);
+
+  if (window.console) {
+    console.log(formatWKT.writeFeature(feature));
+    console.log(formatWKT.writeGeometry(feature.getGeometry()));
+    console.log(formatGeoJSON.writeFeature(feature));
+    console.log(formatGeoJSON.writeGeometry(feature.getGeometry()));
+  }
+
+  var theFeature = JSON.parse(formatGeoJSON.writeFeature(feature));
+  if (theFeature.properties === null) {
+    delete theFeature.properties;
+  }
+
+  var theColl = {type: "FeatureCollection", features: [theFeature]};
+  if (window.console) console.log(JSON.stringify(theColl));
+    var datawps_ =
+      '<?xml version="1.0" encoding="UTF-8"?>'+
+      '<wps:Execute version="1.0.0" service="WPS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wps/1.0.0" xmlns:wfs="http://www.opengis.net/wfs" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wcs="http://www.opengis.net/wcs/1.1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 http://schemas.opengis.net/wps/1.0.0/wpsAll.xsd">'+
+        '<ows:Identifier>geoavalanche:DangerIndex</ows:Identifier>'+
+        '<wps:DataInputs>'+
+          '<wps:Input>'+
+            '<ows:Identifier>FeatureCollection</ows:Identifier>'+
+            '<wps:Data>'+
+              '<wps:ComplexData mimeType="application/json"><![CDATA['+JSON.stringify(theColl)+']]></wps:ComplexData>'+
+            '</wps:Data>'+
+          '</wps:Input>'+
+          '<wps:Input>'+
+            '<ows:Identifier>distance</ows:Identifier>'+
+            '<wps:Data>'+
+              '<wps:LiteralData>1000</wps:LiteralData>'+
+            '</wps:Data>'+
+          '</wps:Input>'+
+          '<wps:Input>'+
+            '<ows:Identifier>quadrantSegments</ows:Identifier>'+
+            '<wps:Data>'+
+              '<wps:LiteralData>10</wps:LiteralData>'+
+            '</wps:Data>'+
+          '</wps:Input>'+
+          '<wps:Input>'+
+            '<ows:Identifier>capStyle</ows:Identifier>'+
+            '<wps:Data>'+
+              '<wps:LiteralData>Round</wps:LiteralData>'+
+            '</wps:Data>'+
+          '</wps:Input>'+
+        '</wps:DataInputs>'+
+        '<wps:ResponseForm>'+
+          '<wps:RawDataOutput mimeType="application/json">'+
+            '<ows:Identifier>result</ows:Identifier>'+
+          '</wps:RawDataOutput>'+
+        '</wps:ResponseForm>'+
+      '</wps:Execute>';
+
+    if (window.console) console.log('POST '+urlwps_+', data='+datawps_);
+    $.ajax({
+      type: "POST",
+      url: urlwps_,
+      data: datawps_,
+      contentType: 'text/xml',
+      beforeSend: function (xhr) {
+          xhr.setRequestHeader('Authorization', 'Basic ' + btoa('admin:geoserver'));
+      },
+      success: function(data) {
+        if (window.console) console.log('success()', data);
+        var newfeatures = formatGeoJSON.readFeatures(data);
+        if (window.console) console.log("new features", newfeatures);
+        vectorSource.addFeatures(newfeatures);
+        map.getView().fit(vector.getSource().getExtent(), map.getSize());
+      },
+      error: function(xhr, desc, err) {
+        if (window.console) console.log('error()');
+        if (window.console) console.log(xhr);
+        if (window.console) console.log(desc);
+        if (window.console) console.log(err);
+      },
+      context: this
+    });
+
+    if (window.console) console.log("TheApp.onSelectAddress() ... done");  
+};
+
 var TheApp = React.createClass({
   getInitialState: function() {
     return {};
@@ -289,15 +381,19 @@ var TheApp = React.createClass({
     if (window.console) console.log("TheApp.drawPoint() ... done");
   },
 
+
   render: function() {
     if (window.console) console.log("TheApp.render()");
     return (
+      <div>
       <form>
       <Button onClick={this.fitExtent}><Glyphicon glyph="fullscreen" /></Button>
       <Button onClick={this.deleteFeature}><Glyphicon glyph="trash" /></Button>
       <Button onClick={this.drawLineString}>Disegna il tuo percorso</Button>
       <Button onClick={this.drawPoint}>Seleziona un punto sulla mappa</Button>
       </form>
+      <SearchAddress onSelectAddress={onSelectAddress} />
+      </div>
     );
   }
 });

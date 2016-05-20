@@ -26,6 +26,7 @@
     "openlayers": "^3.15.1",
     "react": "^0.14.0",
     "react-bootstrap": "^0.29.4",
-    "react-dom": "^0.14.0"
+    "react-dom": "^0.14.0",
+    "react-select": "^1.0.0-beta13"
   }
 }
