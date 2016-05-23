@@ -12,8 +12,9 @@ var SearchAddress = React.createClass({
   },
 
   onChange(value) {
-    if (window.console) console.log("SearchAddress.onChange() ", value);
-    this.props.onSelectAddress(value.lat(), value.lng());
+    if (window.console) console.log("SearchAddress.onChange() ", this.state.options[value]);
+    this.setState({value: value});
+    this.props.onSelectAddress(this.state.options[value].lat, this.state.options[value].lng);
   },
 
   getOptions(input, selectCallback) {
@@ -25,15 +26,16 @@ var SearchAddress = React.createClass({
       });
       return;
     }
+
+    var this_ = this;
     GMaps.geocode({
       address: input,
       callback: function(results, status) {
-        if (window.console) console.log("status=", status);
         if (status !== 'OK') return;
-        var options = results.map(function(entry){
-          return {value: entry.geometry.location, label: entry.formatted_address};
+        var options = results.map(function(entry, index){
+          return {value:index, label:entry.formatted_address, lat:entry.geometry.location.lat(), lng:entry.geometry.location.lng()};
         });
-        if (window.console) console.log("options=", options);
+        this_.setState({options: options});
         selectCallback(null, {
           options: options,
           complete: false
@@ -49,7 +51,8 @@ var SearchAddress = React.createClass({
         <Select.Async
         //name="selected-state"
         //ref="stateSelect"
-        placeholder="Localita' di tuo interesse ..."
+        placeholder="Inserisci la localita' di tuo interesse ..."
+        value={this.state.value}
         //autofocus
         //options={options}
         loadOptions={this.getOptions}
