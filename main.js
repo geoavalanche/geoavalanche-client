@@ -117,13 +117,13 @@ var modify_ = new ol.interaction.Modify({
 });
 
 var onAddSelect = function(evt) {
-    if (window.console) console.log('onAddSelect()');
+    if (window.console) console.log('TheApp.onAddSelect()');
     selectedFeature = evt.feature;
 }
 select_.getFeatures().on('add', onAddSelect, this);
 
 var onRemoveSelect = function(evt) {
-    if (window.console) console.log('onRemoveSelect()');
+    if (window.console) console.log('TheApp.onRemoveSelect()');
 }
 select_.getFeatures().on('remove', onRemoveSelect, this);
 
@@ -243,12 +243,12 @@ var saveFeature = function(feature) {
 }
 
 var onSelectAddress = function(lat, lng){
-  if (window.console) console.log("onSelectAddress()", "latitude", lat, "longitude", lng);
+  if (window.console) console.log("TheApp.onSelectAddress()", "latitude", lat, "longitude", lng);
   map.addInteraction(select_);
   //map.addInteraction(modify_);
 
   var coord = ol.proj.transform([lng, lat], 'EPSG:4326', 'EPSG:3857');
-  if (window.console) console.log("onSelectAddress()", "coordinate", coord);
+  if (window.console) console.log("TheApp.onSelectAddress()", "coordinate", coord);
   var thePoint = new ol.geom.Point(coord);
   var feature = new ol.Feature();
   feature.setGeometryName(geometryName_);
