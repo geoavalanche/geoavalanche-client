@@ -12,12 +12,12 @@ var SearchAddress = React.createClass({
   },
 
   onChange(value) {
-    if (window.console) console.log("onChange() ", value);
+    if (window.console) console.log("SearchAddress.onChange() ", value);
     this.props.onSelectAddress(value.lat(), value.lng());
   },
 
   getOptions(input, selectCallback) {
-    if (window.console) console.log("getOptions() ", input);
+    if (window.console) console.log("SearchAddress.getOptions() ", input);
     if (input === "") {
       selectCallback(null, {
         options: [],
@@ -28,10 +28,12 @@ var SearchAddress = React.createClass({
     GMaps.geocode({
       address: input,
       callback: function(results, status) {
+        if (window.console) console.log("status=", status);
         if (status !== 'OK') return;
         var options = results.map(function(entry){
           return {value: entry.geometry.location, label: entry.formatted_address};
         });
+        if (window.console) console.log("options=", options);
         selectCallback(null, {
           options: options,
           complete: false
@@ -41,6 +43,7 @@ var SearchAddress = React.createClass({
   },
 
   render() {
+    if (window.console) console.log("SearchAddress.render() ");
     return (
       <div className="section">
         <Select.Async
