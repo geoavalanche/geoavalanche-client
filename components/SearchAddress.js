@@ -47,10 +47,9 @@ var SearchAddress = React.createClass({
   render() {
     if (window.console) console.log("SearchAddress.render() ");
     return (
-      <div className="section">
         <Select.Async
-        //name="selected-state"
-        //ref="stateSelect"
+        name="selected-address"
+        ref="addressSelect"
         placeholder="Inserisci la localita' di tuo interesse ..."
         value={this.state.value}
         //autofocus
@@ -62,7 +61,6 @@ var SearchAddress = React.createClass({
         //value={this.state.selectValue}
         onChange={this.onChange}
         searchable={true} />
-      </div>
     );
   }
 });
