@@ -339,6 +339,11 @@ var TheApp = React.createClass({
   },
   fitExtent: function(e) {
     e.preventDefault();
+    if ((vector.getSource().getExtent()[0] === Infinity) && 
+        (vector.getSource().getExtent()[1] === Infinity) &&
+        (vector.getSource().getExtent()[2] === -Infinity) &&
+        (vector.getSource().getExtent()[3] === -Infinity)
+        ) return;
     map.getView().fit(vector.getSource().getExtent(), map.getSize());
   },
   deleteFeature: function(e) {
