@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "browserify main.js -o public/bundle.js && http-server"
+    "local": "browserify main.js -o public/bundle.js && http-server",
+    "start": "browserify main.js -o public/bundle.js && node index.js"
   },
   "browserify": {
     "transform": [
@@ -27,6 +28,7 @@
     "react": "^0.14.0",
     "react-bootstrap": "^0.29.4",
     "react-dom": "^0.14.0",
-    "react-select": "^1.0.0-beta13"
+    "react-select": "^1.0.0-beta13",
+    "browserify": "^13.0.0"
   }
 }

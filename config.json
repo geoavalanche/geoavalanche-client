@@ -1,4 +1,5 @@
 {
+    "port": 3000,
     "auth": "admin:geoserver",
     "featureNS": "geoavalanche",
     "featureType": "geoavalanche_features",
