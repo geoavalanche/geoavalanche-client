@@ -5,19 +5,16 @@ const Button = require('react-bootstrap').Button;
 const Glyphicon = require('react-bootstrap').Glyphicon;
 import SearchAddress from './components/SearchAddress';
 
-var geometryName_ = 'the_geom';
-var srsName_ = 'EPSG:3857';
 var vectorSource;
 var formatwfs_ = new ol.format.WFS();
-var featureType_ = 'azienda1_fences';
-var featureNS_ = 'azienda1';
-var urlwfs_ = 'http://localhost:8282/geoserver/wfs?';
 var serializer_ = new XMLSerializer();
 var draw;
-var urlwps_ = 'http://localhost:8282/geoserver/ows?strict=true';
 var formatWKT = new ol.format.WKT();
 var formatGeoJSON = new ol.format.GeoJSON();
 var selectedFeature;
+
+var config = require("./config.json");
+console.log( config);
 
 var vectorStyleFunction = function(feature) {
   var properties = feature.getProperties();
@@ -57,8 +54,8 @@ var vectorStyleFunction = function(feature) {
 
 vectorSource = new ol.source.Vector({
     format: new ol.format.GeoJSON({
-        defaultDataProjection: srsName_,
-        geometryName: geometryName_
+        defaultDataProjection: config.srsName,
+        geometryName: config.geometryName
     })
 });
 
@@ -186,14 +183,14 @@ var onDrawEnd = function(evt) {
         '</wps:ResponseForm>'+
       '</wps:Execute>';
 
-    if (window.console) console.log('POST '+urlwps_+', data='+datawps_);
+    if (window.console) console.log('POST '+config.urlwps+', data='+datawps_);
     $.ajax({
       type: "POST",
-      url: urlwps_,
+      url: config.urlwps,
       data: datawps_,
       contentType: 'text/xml',
       beforeSend: function (xhr) {
-          xhr.setRequestHeader('Authorization', 'Basic ' + btoa('admin:geoserver'));
+          xhr.setRequestHeader('Authorization', 'Basic ' + btoa(config.auth));
       },
       success: function(data) {
         if (window.console) console.log('success()');
@@ -205,10 +202,7 @@ var onDrawEnd = function(evt) {
         map.getView().fit(vector.getSource().getExtent(), map.getSize());
       },
       error: function(xhr, desc, err) {
-        if (window.console) console.log('error()');
-        if (window.console) console.log(xhr);
-        if (window.console) console.log(desc);
-        if (window.console) console.log(err);
+        if (window.console) console.log('error()', xhr, desc, err);
       },
       context: this
     });
@@ -218,18 +212,18 @@ var onDrawEnd = function(evt) {
 
 var saveFeature = function(feature) {
     var node =formatwfs_.writeTransaction([feature], null, null, {
-      gmlOptions: {srsName: srsName_},
-      featureNS: featureNS_,
-      featureType: featureType_
+      gmlOptions: {srsName: config.srsName},
+      featureNS: config.featureNS,
+      featureType: config.featureType
     });
-    if (window.console) console.log('POST '+urlwfs_+', data='+serializer_.serializeToString(node));
+    if (window.console) console.log('POST '+config.urlwfs+', data='+serializer_.serializeToString(node));
     $.ajax({
       type: "POST",
-      url: urlwfs_,
+      url: config.urlwfs,
       data: serializer_.serializeToString(node),
       contentType: 'text/xml',
       beforeSend: function (xhr) {
-          xhr.setRequestHeader('Authorization', 'Basic ' + btoa('admin:geoserver'));
+          xhr.setRequestHeader('Authorization', 'Basic ' + btoa(config.auth));
       },
       success: function(data) {
         if (window.console) console.log('success()');
@@ -251,7 +245,7 @@ var onSelectAddress = function(lat, lng){
   if (window.console) console.log("TheApp.onSelectAddress()", "coordinate", coord);
   var thePoint = new ol.geom.Point(coord);
   var feature = new ol.Feature();
-  feature.setGeometryName(geometryName_);
+  feature.setGeometryName(config.geometryName);
   feature.setGeometry(thePoint);
 
   if (window.console) {
@@ -305,10 +299,10 @@ var onSelectAddress = function(lat, lng){
         '</wps:ResponseForm>'+
       '</wps:Execute>';
 
-    if (window.console) console.log('POST '+urlwps_+', data='+datawps_);
+    if (window.console) console.log('POST '+config.urlwps+', data='+datawps_);
     $.ajax({
       type: "POST",
-      url: urlwps_,
+      url: config.urlwps,
       data: datawps_,
       contentType: 'text/xml',
       beforeSend: function (xhr) {
@@ -360,7 +354,7 @@ var TheApp = React.createClass({
     map.removeInteraction(draw);
     draw = new ol.interaction.Draw({
       source: vectorSource,
-      geometryName: geometryName_,
+      geometryName: config.geometryName,
       type: 'LineString'
     });
     map.addInteraction(draw);
@@ -376,7 +370,7 @@ var TheApp = React.createClass({
     map.removeInteraction(draw);
     draw = new ol.interaction.Draw({
       source: vectorSource,
-      geometryName: geometryName_,
+      geometryName: config.geometryName,
       type: 'Point'
     });
     map.addInteraction(draw);

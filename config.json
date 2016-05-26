@@ -1,0 +1,9 @@
+{
+  srsName : 'EPSG:3857',
+  geometryName : 'the_geom',
+  featureType : 'azienda1_fences',
+  featureNS : 'azienda1',
+  auth : 'admin:geoserver',
+  urlwfs : 'http://localhost:8282/geoserver/wfs?',
+  urlwps : 'http://localhost:8282/geoserver/ows?strict:true'
+}
