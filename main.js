@@ -14,7 +14,7 @@ var formatGeoJSON = new ol.format.GeoJSON();
 var selectedFeature;
 
 var config = require("./config.json");
-console.log( config);
+console.log(config);
 
 var vectorStyleFunction = function(feature) {
   var properties = feature.getProperties();
@@ -183,7 +183,7 @@ var onDrawEnd = function(evt) {
         '</wps:ResponseForm>'+
       '</wps:Execute>';
 
-    if (window.console) console.log('POST '+config.urlwps+', data='+datawps_);
+    if (window.console) console.log('POST', config.urlwps, datawps_);
     $.ajax({
       type: "POST",
       url: config.urlwps,
@@ -193,10 +193,8 @@ var onDrawEnd = function(evt) {
           xhr.setRequestHeader('Authorization', 'Basic ' + btoa(config.auth));
       },
       success: function(data) {
-        if (window.console) console.log('success()');
-        if (window.console) console.log(data);
+        if (window.console) console.log('success()', data);
         var newfeatures = formatGeoJSON.readFeatures(data);
-        if (window.console) console.log(newfeatures);
         vectorSource.addFeatures(newfeatures);
         vectorSource.removeFeature(feature);
         map.getView().fit(vector.getSource().getExtent(), map.getSize());
@@ -216,7 +214,7 @@ var saveFeature = function(feature) {
       featureNS: config.featureNS,
       featureType: config.featureType
     });
-    if (window.console) console.log('POST '+config.urlwfs+', data='+serializer_.serializeToString(node));
+    if (window.console) console.log('POST', config.urlwfs, serializer_.serializeToString(node));
     $.ajax({
       type: "POST",
       url: config.urlwfs,
@@ -229,8 +227,7 @@ var saveFeature = function(feature) {
         if (window.console) console.log('success()');
       },
       error: function(e) {
-        var errorMsg = e? (e.status + ' ' + e.statusText) : "";
-        if (window.console) console.log('error() '+errorMsg);
+        if (window.console) console.log('error()', e);
       },
       context: this
     });
@@ -299,7 +296,7 @@ var onSelectAddress = function(lat, lng){
         '</wps:ResponseForm>'+
       '</wps:Execute>';
 
-    if (window.console) console.log('POST '+config.urlwps+', data='+datawps_);
+    if (window.console) console.log('POST', config.urlwps, datawps_);
     $.ajax({
       type: "POST",
       url: config.urlwps,
@@ -311,15 +308,11 @@ var onSelectAddress = function(lat, lng){
       success: function(data) {
         if (window.console) console.log('success()', data);
         var newfeatures = formatGeoJSON.readFeatures(data);
-        if (window.console) console.log("new features", newfeatures);
         vectorSource.addFeatures(newfeatures);
         map.getView().fit(vector.getSource().getExtent(), map.getSize());
       },
       error: function(xhr, desc, err) {
-        if (window.console) console.log('error()');
-        if (window.console) console.log(xhr);
-        if (window.console) console.log(desc);
-        if (window.console) console.log(err);
+        if (window.console) console.log('error()', xhr, desc, err);
       },
       context: this
     });
