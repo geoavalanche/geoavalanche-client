@@ -11,6 +11,7 @@ var serializer_ = new XMLSerializer();
 var draw;
 var formatWKT = new ol.format.WKT();
 var formatGeoJSON = new ol.format.GeoJSON();
+var formatWFS = new ol.format.WFS();
 var selectedFeature;
 
 var config = require("./config.json");
@@ -130,13 +131,10 @@ var onDrawEnd = function(evt) {
     map.addInteraction(select_);
     //map.addInteraction(modify_);
 
-
     var feature = evt.feature;
     if (window.console) {
       console.log(formatWKT.writeFeature(feature));
-      console.log(formatWKT.writeGeometry(feature.getGeometry()));
       console.log(formatGeoJSON.writeFeature(feature));
-      console.log(formatGeoJSON.writeGeometry(feature.getGeometry()));
     }
 
     var theFeature = JSON.parse(formatGeoJSON.writeFeature(feature));
@@ -177,7 +175,7 @@ var onDrawEnd = function(evt) {
           '</wps:Input>'+
         '</wps:DataInputs>'+
         '<wps:ResponseForm>'+
-          '<wps:RawDataOutput mimeType="application/json">'+
+          '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
             '<ows:Identifier>result</ows:Identifier>'+
           '</wps:RawDataOutput>'+
         '</wps:ResponseForm>'+
@@ -194,8 +192,10 @@ var onDrawEnd = function(evt) {
       },
       success: function(data) {
         if (window.console) console.log('success()', data);
-        var newfeatures = formatGeoJSON.readFeatures(data);
+        var newfeatures = formatWFS.readFeatures(data);
+        if (window.console) console.log(newfeatures);
         vectorSource.addFeatures(newfeatures);
+        saveFeatures(newfeatures);
         vectorSource.removeFeature(feature);
         map.getView().fit(vector.getSource().getExtent(), map.getSize());
       },
@@ -208,8 +208,8 @@ var onDrawEnd = function(evt) {
     if (window.console) console.log("TheApp.onDrawEnd() ... done");
 }
 
-var saveFeature = function(feature) {
-    var node =formatwfs_.writeTransaction([feature], null, null, {
+var saveFeatures = function(features) {
+    var node =formatwfs_.writeTransaction(features, null, null, {
       gmlOptions: {srsName: config.srsName},
       featureNS: config.featureNS,
       featureType: config.featureType
@@ -224,7 +224,7 @@ var saveFeature = function(feature) {
           xhr.setRequestHeader('Authorization', 'Basic ' + btoa(config.auth));
       },
       success: function(data) {
-        if (window.console) console.log('success()');
+        if (window.console) console.log('success()', data);
       },
       error: function(e) {
         if (window.console) console.log('error()', e);
@@ -290,7 +290,7 @@ var onSelectAddress = function(lat, lng){
           '</wps:Input>'+
         '</wps:DataInputs>'+
         '<wps:ResponseForm>'+
-          '<wps:RawDataOutput mimeType="application/json">'+
+          '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
             '<ows:Identifier>result</ows:Identifier>'+
           '</wps:RawDataOutput>'+
         '</wps:ResponseForm>'+
@@ -307,8 +307,10 @@ var onSelectAddress = function(lat, lng){
       },
       success: function(data) {
         if (window.console) console.log('success()', data);
-        var newfeatures = formatGeoJSON.readFeatures(data);
+        var newfeatures = formatWFS.readFeatures(data);
+        if (window.console) console.log(newfeatures);
         vectorSource.addFeatures(newfeatures);
+        saveFeatures(newfeatures);
         map.getView().fit(vector.getSource().getExtent(), map.getSize());
       },
       error: function(xhr, desc, err) {
