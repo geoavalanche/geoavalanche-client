@@ -1,9 +1,9 @@
 {
-  srsName : 'EPSG:3857',
-  geometryName : 'the_geom',
-  featureType : 'geoavalanche_features',
-  featureNS : 'geoavalanche',
-  auth : 'admin:geoserver',
-  urlwfs : 'http://localhost:8282/geoserver/wfs?',
-  urlwps : 'http://localhost:8282/geoserver/ows?strict:true'
+    "auth": "admin:geoserver",
+    "featureNS": "geoavalanche",
+    "featureType": "geoavalanche_features",
+    "geometryName": "the_geom",
+    "srsName": "EPSG:3857",
+    "urlwfs": "http://192.168.99.100:8080/geoavalanche/wfs?",
+    "urlwps": "http://192.168.99.100:8080/geoavalanche/ows?strict:true"
 }
