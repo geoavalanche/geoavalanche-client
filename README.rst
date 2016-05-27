@@ -1,5 +1,5 @@
 *******************
-GeoAvalanche Server
+GeoAvalanche Client
 *******************
 
 Development
@@ -52,5 +52,5 @@ Run the container with the built image:
 
 .. code-block:: console
 
-	docker run -p 3000:3000 -d geoavalanche/geoavalanche-client
+	docker run -p 3001:3001 -d geoavalanche/geoavalanche-client
 

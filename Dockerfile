@@ -11,6 +11,8 @@ RUN npm install
 # Bundle app source
 ADD . /usr/src/app
 
-ENV NODE_PORT 4000
+# Set default port for testing environment
+ENV NODE_PORT 3001
 EXPOSE ${NODE_PORT}
+
 CMD [ "npm", "run", "test" ]

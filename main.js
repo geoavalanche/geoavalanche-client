@@ -14,7 +14,7 @@ var formatGeoJSON = new ol.format.GeoJSON();
 var formatWFS = new ol.format.WFS();
 var selectedFeature;
 
-var config = require("./config.json");
+var config = require("./static.json");
 console.log(config);
 
 var vectorStyleFunction = function(feature) {

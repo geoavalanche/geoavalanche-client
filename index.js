@@ -1,10 +1,13 @@
 var http = require('http'),
 	//port = require('./config').server.port,
-	conf = require('./config'),
+	conf = require('./config/index'),
 	express = require('express'),
     path = require('path');
 
-port = conf.port;
+var env = process.env.NODE_ENV;
+console.log('Environment variable NODE_ENV has been set to ' + env);
+
+port = conf(env).server.port;
 
 var app = express();  
 app.set('port', port);
