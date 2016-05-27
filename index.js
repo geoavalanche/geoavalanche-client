@@ -1,6 +1,5 @@
 var http = require('http'),
-	//port = require('./config').server.port,
-	conf = require('./config/index'),
+	conf = require('./config'),
 	express = require('express'),
     path = require('path');
 
