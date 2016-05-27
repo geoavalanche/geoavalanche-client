@@ -11,5 +11,6 @@ RUN npm install
 # Bundle app source
 ADD . /usr/src/app
 
-EXPOSE 3000
-CMD [ "npm", "run", "start" ]
+ENV NODE_PORT 4000
+EXPOSE ${NODE_PORT}
+CMD [ "npm", "run", "test" ]

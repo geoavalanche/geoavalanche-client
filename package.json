@@ -1,7 +1,8 @@
 {
   "scripts": {
     "local": "browserify main.js -o public/bundle.js && http-server",
-    "start": "browserify main.js -o public/bundle.js && node index.js"
+    "start": "NODE_ENV=development browserify main.js -o public/bundle.js && node index.js",
+    "test": "NODE_PORT=3001 NODE_ENV=testing browserify main.js -o public/bundle.js && node index.js"
   },
   "browserify": {
     "transform": [

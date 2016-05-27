@@ -1,6 +1,7 @@
 .git
 .gitignore
 .DS_Store
+npm-debug.log
 
 node_modules
 /public/bundle.js

@@ -117,12 +117,12 @@ var modify_ = new ol.interaction.Modify({
 var onAddSelect = function(evt) {
     if (window.console) console.log('TheApp.onAddSelect()');
     selectedFeature = evt.feature;
-}
+};
 select_.getFeatures().on('add', onAddSelect, this);
 
 var onRemoveSelect = function(evt) {
     if (window.console) console.log('TheApp.onRemoveSelect()');
-}
+};
 select_.getFeatures().on('remove', onRemoveSelect, this);
 
 var onDrawEnd = function(evt) {
@@ -206,7 +206,7 @@ var onDrawEnd = function(evt) {
     });
 
     if (window.console) console.log("TheApp.onDrawEnd() ... done");
-}
+};
 
 var saveFeatures = function(features) {
     var node =formatwfs_.writeTransaction(features, null, null, {
@@ -231,7 +231,7 @@ var saveFeatures = function(features) {
       },
       context: this
     });
-}
+};
 
 var onSelectAddress = function(lat, lng){
   if (window.console) console.log("TheApp.onSelectAddress()", "latitude", lat, "longitude", lng);
