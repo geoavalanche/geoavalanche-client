@@ -1,9 +1,15 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const ol = require('openlayers');
-const Button = require('react-bootstrap').Button;
-const Glyphicon = require('react-bootstrap').Glyphicon;
-import SearchAddress from './components/SearchAddress';
+// const React = require('react');
+// const ReactDOM = require('react-dom');
+// const ol = require('openlayers');
+// const Button = require('react-bootstrap').Button;
+// const Glyphicon = require('react-bootstrap').Glyphicon;
+// import SearchAddress from './components/SearchAddress';
+var React = require('react');
+var ReactDOM = require('react-dom');
+var ol = require('openlayers');
+var Button = require('react-bootstrap').Button;
+var Glyphicon = require('react-bootstrap').Glyphicon;
+var SearchAddress = require('./components/SearchAddress');
 
 var vectorSource;
 var formatwfs_ = new ol.format.WFS();
@@ -14,8 +20,30 @@ var formatGeoJSON = new ol.format.GeoJSON();
 var formatWFS = new ol.format.WFS();
 var selectedFeature;
 
-var config = require("./static.json");
-console.log(config);
+var env = process.env.NODE_ENV;
+console.log('Environment variable NODE_ENV has been set to ' + env);
+
+var config = null;
+if (env === "production") {
+  config = require('./env/production.js');
+}
+else if (env === "development") {
+  config = require('./env/development.js');
+}
+else if (env === "testing") {
+  config = require('./env/testing.js');
+}
+else if (env === "staging") {
+  config = require('./env/staging.js');
+}
+else config = require('./static.json');
+
+//var config = require("./static.json"); //static configuration
+//var config  = require('./env/' + 'development' + '.js'); //doesn't work
+//var config = require('./env' + '/' + env + '.js'); //doesn't work
+//var config  = require("./env/development.js"); //works
+
+console.log(config.geoavalanche);
 
 var vectorStyleFunction = function(feature) {
   var properties = feature.getProperties();
@@ -55,8 +83,8 @@ var vectorStyleFunction = function(feature) {
 
 vectorSource = new ol.source.Vector({
     format: new ol.format.GeoJSON({
-        defaultDataProjection: config.srsName,
-        geometryName: config.geometryName
+        defaultDataProjection: config.geoavalanche.srsName,
+        geometryName: config.geoavalanche.geometryName
     })
 });
 
@@ -181,14 +209,14 @@ var onDrawEnd = function(evt) {
         '</wps:ResponseForm>'+
       '</wps:Execute>';
 
-    if (window.console) console.log('POST', config.urlwps, datawps_);
+    if (window.console) console.log('POST', config.geoavalanche.urlwps, datawps_);
     $.ajax({
       type: "POST",
-      url: config.urlwps,
+      url: config.geoavalanche.urlwps,
       data: datawps_,
       contentType: 'text/xml',
       beforeSend: function (xhr) {
-          xhr.setRequestHeader('Authorization', 'Basic ' + btoa(config.auth));
+          xhr.setRequestHeader('Authorization', 'Basic ' + btoa(config.geoavalanche.auth));
       },
       success: function(data) {
         if (window.console) console.log('success()', data);
@@ -210,18 +238,18 @@ var onDrawEnd = function(evt) {
 
 var saveFeatures = function(features) {
     var node =formatwfs_.writeTransaction(features, null, null, {
-      gmlOptions: {srsName: config.srsName},
-      featureNS: config.featureNS,
-      featureType: config.featureType
+      gmlOptions: {srsName: config.geoavalanche.srsName},
+      featureNS: config.geoavalanche.featureNS,
+      featureType: config.geoavalanche.featureType
     });
-    if (window.console) console.log('POST', config.urlwfs, serializer_.serializeToString(node));
+    if (window.console) console.log('POST', config.geoavalanche.urlwfs, serializer_.serializeToString(node));
     $.ajax({
       type: "POST",
-      url: config.urlwfs,
+      url: config.geoavalanche.urlwfs,
       data: serializer_.serializeToString(node),
       contentType: 'text/xml',
       beforeSend: function (xhr) {
-          xhr.setRequestHeader('Authorization', 'Basic ' + btoa(config.auth));
+          xhr.setRequestHeader('Authorization', 'Basic ' + btoa(config.geoavalanche.auth));
       },
       success: function(data) {
         if (window.console) console.log('success()', data);
@@ -242,7 +270,7 @@ var onSelectAddress = function(lat, lng){
   if (window.console) console.log("TheApp.onSelectAddress()", "coordinate", coord);
   var thePoint = new ol.geom.Point(coord);
   var feature = new ol.Feature();
-  feature.setGeometryName(config.geometryName);
+  feature.setGeometryName(config.geoavalanche.geometryName);
   feature.setGeometry(thePoint);
 
   if (window.console) {
@@ -296,10 +324,10 @@ var onSelectAddress = function(lat, lng){
         '</wps:ResponseForm>'+
       '</wps:Execute>';
 
-    if (window.console) console.log('POST', config.urlwps, datawps_);
+    if (window.console) console.log('POST', config.geoavalanche.urlwps, datawps_);
     $.ajax({
       type: "POST",
-      url: config.urlwps,
+      url: config.geoavalanche.urlwps,
       data: datawps_,
       contentType: 'text/xml',
       beforeSend: function (xhr) {
@@ -349,7 +377,7 @@ var TheApp = React.createClass({
     map.removeInteraction(draw);
     draw = new ol.interaction.Draw({
       source: vectorSource,
-      geometryName: config.geometryName,
+      geometryName: config.geoavalanche.geometryName,
       type: 'LineString'
     });
     map.addInteraction(draw);
@@ -365,7 +393,7 @@ var TheApp = React.createClass({
     map.removeInteraction(draw);
     draw = new ol.interaction.Draw({
       source: vectorSource,
-      geometryName: config.geometryName,
+      geometryName: config.geoavalanche.geometryName,
       type: 'Point'
     });
     map.addInteraction(draw);

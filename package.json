@@ -1,9 +1,10 @@
 {
   "scripts": {
     "local": "browserify main.js -o public/bundle.js && http-server",
-    "start": "export NODE_ENV=development && browserify main.js -o public/bundle.js && node index.js",
-    "test": "export NODE_ENV=testing && browserify main.js -o public/bundle.js && node index.js",
-    "testw": "set NODE_ENV=testing & browserify main.js -o public/bundle.js & node index.js"
+    "start": "export NODE_ENV=development && browserify main.js -t envify -o public/bundle.js && node index.js",
+    "startw": "set NODE_ENV=development & browserify main.js -t envify -o public/bundle.js & node index.js",
+    "test": "export NODE_ENV=testing && browserify main.js -t envify -o public/bundle.js && node index.js",
+    "testw": "set NODE_ENV=testing & browserify main.js -t envify -o public/bundle.js & node index.js"
   },
   "browserify": {
     "transform": [
@@ -31,6 +32,7 @@
     "react-bootstrap": "^0.29.4",
     "react-dom": "^0.14.0",
     "react-select": "^1.0.0-beta13",
-    "browserify": "^13.0.0"
+    "browserify": "^13.0.0",
+    "envify": "^3.4.0"
   }
 }
