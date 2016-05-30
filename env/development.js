@@ -9,8 +9,8 @@ var development = {
 	    featureType: 'geoavalanche_features',
 	    geometryName: 'the_geom',
 	    srsName: 'EPSG:3857',
-	    urlwfs: 'http://localhost:8282/geoavalanche/wfs?',
-	    urlwps: 'http://localhost:8282/geoavalanche/ows?strict:true'
+	    urlwfs: 'http://localhost:8282/geoserver/wfs?',
+	    urlwps: 'http://localhost:8282/geoserver/ows?strict:true'
 	}
 
 };
