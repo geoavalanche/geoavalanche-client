@@ -48,6 +48,12 @@ Build the container image from where you have placed the dockerfile
 
 	docker build -t geoavalanche/geoavalanche-client .
 
+If you want to pass the docker host variable to the container then the command is
+ 
+.. code-block:: console
+ 
+     docker build --build-arg DOCKER_HOST=$DOCKER_HOST -t geoavalanche/geoavalanche-client .
+
 Run the container with the built image:
 
 .. code-block:: console
