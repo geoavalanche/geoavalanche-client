@@ -9,7 +9,7 @@ var ReactDOM = require('react-dom');
 var ol = require('openlayers');
 var Button = require('react-bootstrap').Button;
 var Glyphicon = require('react-bootstrap').Glyphicon;
-var SearchAddress = require('./components/SearchAddress');
+var MapzenSearchAddress = require('./components/MapzenSearchAddress');
 
 var vectorSource;
 var formatwfs_ = new ol.format.WFS();
@@ -414,7 +414,7 @@ var TheApp = React.createClass({
       <Button onClick={this.drawLineString}>Disegna il tuo percorso</Button>
       <Button onClick={this.drawPoint}>Seleziona un punto sulla mappa</Button>
       </form>
-      <SearchAddress onSelectAddress={onSelectAddress} />
+      <MapzenSearchAddress onSelectAddress={onSelectAddress} />
       </div>
     );
   }

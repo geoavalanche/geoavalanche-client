@@ -5,20 +5,20 @@ const Glyphicon = require('react-bootstrap').Glyphicon;
 var Select = require('react-select');
 
 
-var SearchAddress = React.createClass({
+var GMapSearchAddress = React.createClass({
 
   getInitialState() {
     return { };
   },
 
   onChange(value) {
-    if (window.console) console.log("SearchAddress.onChange() ", this.state.options[value]);
+    if (window.console) console.log("GMapSearchAddress.onChange() ", this.state.options[value]);
     this.setState({value: value});
     this.props.onSelectAddress(this.state.options[value].lat, this.state.options[value].lng);
   },
 
   getOptions(input, selectCallback) {
-    if (window.console) console.log("SearchAddress.getOptions() ", input);
+    if (window.console) console.log("GMapSearchAddress.getOptions() ", input);
     if (input === "") {
       selectCallback(null, {
         options: [],
@@ -45,7 +45,7 @@ var SearchAddress = React.createClass({
   },
 
   render() {
-    if (window.console) console.log("SearchAddress.render() ");
+    if (window.console) console.log("GMapSearchAddress.render() ");
     return (
         <Select.Async
         name="selected-address"
@@ -65,4 +65,4 @@ var SearchAddress = React.createClass({
   }
 });
 
-module.exports = SearchAddress;
+module.exports = GMapSearchAddress;
