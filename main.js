@@ -19,6 +19,7 @@ var formatWKT = new ol.format.WKT();
 var formatGeoJSON = new ol.format.GeoJSON();
 var formatWFS = new ol.format.WFS();
 var selectedFeature;
+var featureid = 0;
 
 var env = process.env.NODE_ENV;
 console.log('Environment variable NODE_ENV has been set to ' + env);
@@ -56,7 +57,7 @@ var vectorStyleFunction = function(feature) {
       color: 'green'
     })
   });
-  if (properties.DANGERINDEX === '1') {
+  if (properties.dangerindex === '1') {
     style = new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: 'red',
@@ -67,7 +68,7 @@ var vectorStyleFunction = function(feature) {
       })
     });
   }
-  if (properties.DANGERINDEX === '2') {
+  if (properties.dangerindex === '2') {
     style = new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: 'black',
@@ -116,7 +117,7 @@ var selectedStyleFunction = function(feature, resolution) {
       width: 3
     })
   });
-  if (properties.DANGERINDEX === '1') {
+  if (properties.dangerindex === '1') {
     style = new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: 'red',
@@ -124,7 +125,7 @@ var selectedStyleFunction = function(feature, resolution) {
       })
     });
   }
-  if (properties.DANGERINDEX === '2') {
+  if (properties.dangerindex === '2') {
     style = new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: 'black',
@@ -160,6 +161,7 @@ var onDrawEnd = function(evt) {
     //map.addInteraction(modify_);
 
     var feature = evt.feature;
+    feature.setId('feature'+featureid++);
     if (window.console) {
       console.log(formatWKT.writeFeature(feature));
       console.log(formatGeoJSON.writeFeature(feature));
@@ -222,9 +224,10 @@ var onDrawEnd = function(evt) {
         if (window.console) console.log('success()', data);
         var newfeatures = formatWFS.readFeatures(data);
         if (window.console) console.log(newfeatures);
+        vectorSource.removeFeature(feature);
+        vectorSource.refresh();
         vectorSource.addFeatures(newfeatures);
         saveFeatures(newfeatures);
-        vectorSource.removeFeature(feature);
         map.getView().fit(vector.getSource().getExtent(), map.getSize());
       },
       error: function(xhr, desc, err) {
@@ -270,6 +273,7 @@ var onSelectAddress = function(lat, lng){
   if (window.console) console.log("TheApp.onSelectAddress()", "coordinate", coord);
   var thePoint = new ol.geom.Point(coord);
   var feature = new ol.Feature();
+  feature.setId('feature'+featureid++);
   feature.setGeometryName(config.geoavalanche.geometryName);
   feature.setGeometry(thePoint);
 
@@ -347,7 +351,7 @@ var onSelectAddress = function(lat, lng){
       context: this
     });
 
-    if (window.console) console.log("TheApp.onSelectAddress() ... done");  
+    if (window.console) console.log("TheApp.onSelectAddress() ... done");
 };
 
 var TheApp = React.createClass({
@@ -356,7 +360,7 @@ var TheApp = React.createClass({
   },
   fitExtent: function(e) {
     e.preventDefault();
-    if ((vector.getSource().getExtent()[0] === Infinity) && 
+    if ((vector.getSource().getExtent()[0] === Infinity) &&
         (vector.getSource().getExtent()[1] === Infinity) &&
         (vector.getSource().getExtent()[2] === -Infinity) &&
         (vector.getSource().getExtent()[3] === -Infinity)
