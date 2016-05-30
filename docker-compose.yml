@@ -1,0 +1,32 @@
+version: '2'
+services:
+    gaclient:
+        build: .
+        command: npm run test
+        volumes:
+              - .:/usr/src/app
+        # volumes_from:
+        #       - geodata
+        # links:
+        #       - gaserver
+        environment:
+              - DOCKER_HOST
+              - DOCKER_HOST_IP
+        ports:
+              - "3001:3001"
+        depends_on:
+              #- postgis
+              - gaserver
+    gaserver:
+        image: geoavalanche/geoavalanche-server
+        volumes_from:
+            - gadata
+        ports:
+            - "8080:8080"
+            - "8888:8888"
+    gadata:
+        image: geoavalanche/geoavalanche-data
+        volumes:
+            - /var/lib/geoavalanche/data
+    # postgis:
+    #     image: postgis

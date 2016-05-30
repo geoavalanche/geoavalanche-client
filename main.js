@@ -22,6 +22,8 @@ var selectedFeature;
 
 var env = process.env.NODE_ENV;
 console.log('Environment variable NODE_ENV has been set to ' + env);
+var gas = process.env.APP_GASERV_HOST;
+console.log('Environment variable APP_GASERV_HOST has been set to ' + gas);
 
 var config = null;
 if (env === "production") {
