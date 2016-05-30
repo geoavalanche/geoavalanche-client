@@ -21,7 +21,7 @@ var config = function (env) {
 			break;
 
 		default:
-			console.error('Unrecognized NODE_ENV: ' + env);
+			console.error('Unrecognized NODE_ENV: >>'+env+'<<');
 			process.exit(1);
 	}
 	return conf;
