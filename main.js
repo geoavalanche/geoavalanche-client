@@ -414,7 +414,7 @@ var TheApp = React.createClass({
       <Button onClick={this.drawLineString}>Disegna il tuo percorso</Button>
       <Button onClick={this.drawPoint}>Seleziona un punto sulla mappa</Button>
       </form>
-      <MapzenSearchAddress onSelectAddress={onSelectAddress} />
+      <MapzenSearchAddress url={config.mapzen.url} onSelectAddress={onSelectAddress} />
       </div>
     );
   }

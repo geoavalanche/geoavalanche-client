@@ -27,8 +27,7 @@ var MapzenSearchAddress = React.createClass({
       return;
     }
 
-    var thekey = 'search-PBce8si';
-    var theurl = 'https://search.mapzen.com/v1/search?text='+input+'&api_key='+thekey;
+    var theurl = this.props.url+input;
     if (window.console) console.log('GET', theurl);
     $.ajax({
       type: "GET",
@@ -37,7 +36,7 @@ var MapzenSearchAddress = React.createClass({
       success: function(data) {
         if (window.console) console.log('success()', data);
         var options = data.features.map(function(entry, index){
-          return {value:index, label:entry.properties.label, lat:entry.geometry.coordinates[1], lng:entry.geometry.coordinates[0]};
+          return {value:index, label:entry.properties.layer+': '+entry.properties.label, lat:entry.geometry.coordinates[1], lng:entry.geometry.coordinates[0]};
         });
         this.setState({options: options});
         selectCallback(null, {
