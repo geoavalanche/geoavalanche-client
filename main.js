@@ -183,27 +183,61 @@ var onDrawEnd = function(evt) {
         '<wps:DataInputs>'+
           '<wps:Input>'+
             '<ows:Identifier>FeatureCollection</ows:Identifier>'+
-            '<wps:Data>'+
-              '<wps:ComplexData mimeType="application/json"><![CDATA['+JSON.stringify(theColl)+']]></wps:ComplexData>'+
-            '</wps:Data>'+
-          '</wps:Input>'+
-          '<wps:Input>'+
-            '<ows:Identifier>distance</ows:Identifier>'+
-            '<wps:Data>'+
-              '<wps:LiteralData>1000</wps:LiteralData>'+
-            '</wps:Data>'+
-          '</wps:Input>'+
-          '<wps:Input>'+
-            '<ows:Identifier>quadrantSegments</ows:Identifier>'+
-            '<wps:Data>'+
-              '<wps:LiteralData>10</wps:LiteralData>'+
-            '</wps:Data>'+
-          '</wps:Input>'+
-          '<wps:Input>'+
-            '<ows:Identifier>capStyle</ows:Identifier>'+
-            '<wps:Data>'+
-              '<wps:LiteralData>Round</wps:LiteralData>'+
-            '</wps:Data>'+
+            '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
+              '<wps:Body>'+
+                '<wps:Execute version="1.0.0" service="WPS">'+
+                  '<ows:Identifier>geoavalanche:Crowd</ows:Identifier>'+
+                  '<wps:DataInputs>'+
+                    '<wps:Input>'+
+                      '<ows:Identifier>FeatureCollection</ows:Identifier>'+
+                      '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
+                        '<wps:Body>'+
+                          '<wps:Execute version="1.0.0" service="WPS">'+
+                            '<ows:Identifier>geoavalanche:Buffer</ows:Identifier>'+
+                            '<wps:DataInputs>'+
+                              '<wps:Input>'+
+                                '<ows:Identifier>FeatureCollection</ows:Identifier>'+
+                                '<wps:Data>'+
+                                  '<wps:ComplexData mimeType="application/json"><![CDATA['+JSON.stringify(theColl)+']]></wps:ComplexData>'+
+                                '</wps:Data>'+
+                              '</wps:Input>'+
+                              '<wps:Input>'+
+                                '<ows:Identifier>distance</ows:Identifier>'+
+                                '<wps:Data>'+
+                                  '<wps:LiteralData>5000</wps:LiteralData>'+
+                                '</wps:Data>'+
+                              '</wps:Input>'+
+                              '<wps:Input>'+
+                                '<ows:Identifier>quadrantSegments</ows:Identifier>'+
+                                '<wps:Data>'+
+                                  '<wps:LiteralData>10</wps:LiteralData>'+
+                                '</wps:Data>'+
+                              '</wps:Input>'+
+                              '<wps:Input>'+
+                                '<ows:Identifier>capStyle</ows:Identifier>'+
+                                '<wps:Data>'+
+                                  '<wps:LiteralData>Round</wps:LiteralData>'+
+                                '</wps:Data>'+
+                              '</wps:Input>'+
+                            '</wps:DataInputs>'+
+                            '<wps:ResponseForm>'+
+                              '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
+                                '<ows:Identifier>result</ows:Identifier>'+
+                              '</wps:RawDataOutput>'+
+                            '</wps:ResponseForm>'+
+                          '</wps:Execute>'+
+                        '</wps:Body>'+
+                      '</wps:Reference>'+
+                    '</wps:Input>'+
+                  '</wps:DataInputs>'+
+                  '<wps:ResponseForm>'+
+                    '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
+                      '<ows:Identifier>result</ows:Identifier>'+
+                    '</wps:RawDataOutput>'+
+                  '</wps:ResponseForm>'+
+                '</wps:Execute>'+
+              '</wps:Body>'+
+            '</wps:Reference>'+
           '</wps:Input>'+
         '</wps:DataInputs>'+
         '<wps:ResponseForm>'+
@@ -300,27 +334,61 @@ var onSelectAddress = function(lat, lng){
         '<wps:DataInputs>'+
           '<wps:Input>'+
             '<ows:Identifier>FeatureCollection</ows:Identifier>'+
-            '<wps:Data>'+
-              '<wps:ComplexData mimeType="application/json"><![CDATA['+JSON.stringify(theColl)+']]></wps:ComplexData>'+
-            '</wps:Data>'+
-          '</wps:Input>'+
-          '<wps:Input>'+
-            '<ows:Identifier>distance</ows:Identifier>'+
-            '<wps:Data>'+
-              '<wps:LiteralData>1000</wps:LiteralData>'+
-            '</wps:Data>'+
-          '</wps:Input>'+
-          '<wps:Input>'+
-            '<ows:Identifier>quadrantSegments</ows:Identifier>'+
-            '<wps:Data>'+
-              '<wps:LiteralData>10</wps:LiteralData>'+
-            '</wps:Data>'+
-          '</wps:Input>'+
-          '<wps:Input>'+
-            '<ows:Identifier>capStyle</ows:Identifier>'+
-            '<wps:Data>'+
-              '<wps:LiteralData>Round</wps:LiteralData>'+
-            '</wps:Data>'+
+            '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
+              '<wps:Body>'+
+                '<wps:Execute version="1.0.0" service="WPS">'+
+                  '<ows:Identifier>geoavalanche:Crowd</ows:Identifier>'+
+                  '<wps:DataInputs>'+
+                    '<wps:Input>'+
+                      '<ows:Identifier>FeatureCollection</ows:Identifier>'+
+                      '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
+                        '<wps:Body>'+
+                          '<wps:Execute version="1.0.0" service="WPS">'+
+                            '<ows:Identifier>geoavalanche:Buffer</ows:Identifier>'+
+                            '<wps:DataInputs>'+
+                              '<wps:Input>'+
+                                '<ows:Identifier>FeatureCollection</ows:Identifier>'+
+                                '<wps:Data>'+
+                                  '<wps:ComplexData mimeType="application/json"><![CDATA['+JSON.stringify(theColl)+']]></wps:ComplexData>'+
+                                '</wps:Data>'+
+                              '</wps:Input>'+
+                              '<wps:Input>'+
+                                '<ows:Identifier>distance</ows:Identifier>'+
+                                '<wps:Data>'+
+                                  '<wps:LiteralData>5000</wps:LiteralData>'+
+                                '</wps:Data>'+
+                              '</wps:Input>'+
+                              '<wps:Input>'+
+                                '<ows:Identifier>quadrantSegments</ows:Identifier>'+
+                                '<wps:Data>'+
+                                  '<wps:LiteralData>10</wps:LiteralData>'+
+                                '</wps:Data>'+
+                              '</wps:Input>'+
+                              '<wps:Input>'+
+                                '<ows:Identifier>capStyle</ows:Identifier>'+
+                                '<wps:Data>'+
+                                  '<wps:LiteralData>Round</wps:LiteralData>'+
+                                '</wps:Data>'+
+                              '</wps:Input>'+
+                            '</wps:DataInputs>'+
+                            '<wps:ResponseForm>'+
+                              '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
+                                '<ows:Identifier>result</ows:Identifier>'+
+                              '</wps:RawDataOutput>'+
+                            '</wps:ResponseForm>'+
+                          '</wps:Execute>'+
+                        '</wps:Body>'+
+                      '</wps:Reference>'+
+                    '</wps:Input>'+
+                  '</wps:DataInputs>'+
+                  '<wps:ResponseForm>'+
+                    '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
+                      '<ows:Identifier>result</ows:Identifier>'+
+                    '</wps:RawDataOutput>'+
+                  '</wps:ResponseForm>'+
+                '</wps:Execute>'+
+              '</wps:Body>'+
+            '</wps:Reference>'+
           '</wps:Input>'+
         '</wps:DataInputs>'+
         '<wps:ResponseForm>'+
