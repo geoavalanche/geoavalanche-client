@@ -42,6 +42,12 @@ Start the docker machine:
 
     docker-machine start default
 
+Build the container image for data volume from the directory *data*:
+
+.. code-block:: console
+
+    docker build -t geoavalanche/geoavalanche-data .
+
 Build the container image from where you have placed the dockerfile
 
 .. code-block:: console
@@ -52,7 +58,7 @@ If you want to pass the docker host variable to the container then the command i
  
 .. code-block:: console
  
-     docker build --build-arg DOCKER_HOST=$DOCKER_HOST -t geoavalanche/geoavalanche-client .
+     docker build --build-arg DOCKER_HOST_IP=$(docker-machine ip) -t geoavalanche/geoavalanche-client .
 
 Run the container with the built image:
 
@@ -60,3 +66,11 @@ Run the container with the built image:
 
 	docker run -p 3001:3001 -d geoavalanche/geoavalanche-client
 
+Docker Compose
+^^^^^^^^^^^^^^
+
+Run the orchestration of the GeoAvalanche containers with this command:
+
+.. code-block:: console
+
+    DOCKER_HOST_IP=$(docker-machine ip) docker-compose up

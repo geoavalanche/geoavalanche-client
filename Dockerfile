@@ -12,14 +12,14 @@ RUN npm install
 ADD . /usr/src/app
 
 # Set DOCKER_HOST ip address
-# ENV DOCKER_HOST_IP ${DOCKER_HOST_IP}
-# ENV DOCKER_HOST_IP {{DOCKER_HOST_IP}}
-# RUN echo ${DOCKER_HOST_IP}
-# ARG DOCKER_HOST
-RUN export DOCKER_HOST_IP=$(echo ${DOCKER_HOST} | sed 's/tcp:\/\/\([^:]*\).*/\1/')
+# ARG DOCKER_HOST=${DOCKER_HOST}
+# ENV DOCKER_HOST ${DOCKER_HOST}
+ARG DOCKER_HOST_IP=${DOCKER_HOST_IP}
 ENV DOCKER_HOST_IP ${DOCKER_HOST_IP}
-RUN echo ${DOCKER_HOST_IP}
-# ENV DOCKER_HOST {{DOCKER_HOST}}
+# RUN touch host_ip
+# RUN export DOCKER_HOST_IP=$(echo ${DOCKER_HOST} | sed 's/tcp:\/\/\([^:]*\).*/\1/') sempre vuoto
+# RUN echo -n $(echo ${DOCKER_HOST} | sed 's/tcp:\/\/\([^:]*\).*/\1/') >> /root/.bashrc
+# RUN echo -n $(echo ${DOCKER_HOST} | sed 's/tcp:\/\/\([^:]*\).*/\1/') >> envset
 
 # Set default port for testing environment
 ENV NODE_PORT 3001
