@@ -216,7 +216,7 @@ var onDrawEnd = function(evt) {
                               '<wps:Input>'+
                                 '<ows:Identifier>capStyle</ows:Identifier>'+
                                 '<wps:Data>'+
-                                  '<wps:LiteralData>Round</wps:LiteralData>'+
+                                  '<wps:LiteralData>1</wps:LiteralData>'+
                                 '</wps:Data>'+
                               '</wps:Input>'+
                             '</wps:DataInputs>'+
@@ -367,7 +367,7 @@ var onSelectAddress = function(lat, lng){
                               '<wps:Input>'+
                                 '<ows:Identifier>capStyle</ows:Identifier>'+
                                 '<wps:Data>'+
-                                  '<wps:LiteralData>Round</wps:LiteralData>'+
+                                  '<wps:LiteralData>1</wps:LiteralData>'+
                                 '</wps:Data>'+
                               '</wps:Input>'+
                             '</wps:DataInputs>'+
