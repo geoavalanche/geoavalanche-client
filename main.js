@@ -10,6 +10,7 @@ var ol = require('openlayers');
 var Button = require('react-bootstrap').Button;
 var Glyphicon = require('react-bootstrap').Glyphicon;
 var MapzenSearchAddress = require('./components/MapzenSearchAddress');
+var GPXUpload = require('./components/GPXUpload');
 
 var vectorSource;
 var formatwfs_ = new ol.format.WFS();
@@ -488,6 +489,7 @@ var TheApp = React.createClass({
       <Button onClick={this.drawLineString}>Disegna il tuo percorso</Button>
       <Button onClick={this.drawPoint}>Seleziona un punto sulla mappa</Button>
       </form>
+      <GPXUpload />
       <MapzenSearchAddress url={config.mapzen.url} onSelectAddress={onSelectAddress} />
       </div>
     );

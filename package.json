@@ -1,8 +1,8 @@
 {
   "scripts": {
     "local": "browserify main.js -o public/bundle.js && http-server",
-    "start": "export NODE_ENV=development && browserify main.js -t envify -o public/bundle.js && node index.js",
-    "startw": "set NODE_ENV=development& browserify main.js -t envify -o public/bundle.js & node index.js",
+    "dev": "export NODE_ENV=development && browserify main.js -t envify -o public/bundle.js && node index.js",
+    "devw": "set NODE_ENV=development& browserify main.js -t envify -o public/bundle.js & node index.js",
     "test": "export APP_GASERV_HOST=${DOCKER_HOST_IP} && export NODE_ENV=testing && browserify main.js -t envify -o public/bundle.js && node index.js",
     "testw": "set NODE_ENV=testing& browserify main.js -t envify -o public/bundle.js & node index.js"
   },
@@ -26,13 +26,14 @@
     "babel-preset-stage-0": "^6.5.0",
     "babelify": "^7.3.0",
     "body-parser": "^1.15.1",
+    "browserify": "^13.0.0",
+    "envify": "^3.4.0",
     "express": "^4.13.4",
     "openlayers": "^3.15.1",
     "react": "^0.14.0",
     "react-bootstrap": "^0.29.4",
     "react-dom": "^0.14.0",
-    "react-select": "^1.0.0-beta13",
-    "browserify": "^13.0.0",
-    "envify": "^3.4.0"
+    "react-dropzone": "^3.5.0",
+    "react-select": "^1.0.0-beta13"
   }
 }
