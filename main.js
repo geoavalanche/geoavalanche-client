@@ -425,6 +425,16 @@ var onSelectAddress = function(lat, lng){
     if (window.console) console.log("TheApp.onSelectAddress() ... done");
 };
 
+var onSelectFile = function(filecontent){
+  if (window.console) console.log("TheApp.onSelectFile()", "filecontent", filecontent);
+  var formatGPX = new ol.format.GPX();
+  if (window.console) console.log(formatGPX.readProjection(filecontent));
+  var newfeatures = formatGPX.readFeatures(filecontent, {featureProjection:'EPSG:3857'});
+  if (window.console) console.log(newfeatures);
+  vectorSource.addFeatures(newfeatures);
+  map.getView().fit(vector.getSource().getExtent(), map.getSize());
+}
+
 var TheApp = React.createClass({
   getInitialState: function() {
     return {};
@@ -489,7 +499,7 @@ var TheApp = React.createClass({
       <Button onClick={this.drawLineString}>Disegna il tuo percorso</Button>
       <Button onClick={this.drawPoint}>Seleziona un punto sulla mappa</Button>
       </form>
-      <GPXUpload />
+      <GPXUpload onSelectFile={onSelectFile} />
       <MapzenSearchAddress url={config.mapzen.url} onSelectAddress={onSelectAddress} />
       </div>
     );

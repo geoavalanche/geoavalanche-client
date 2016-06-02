@@ -15,10 +15,10 @@ var GPXUpload = React.createClass({
       });
       files.forEach(function(entry, index) {
         console.log(entry);
-        
+        var this_ = this;
         var reader  = new FileReader();
         reader.addEventListener("loadend", function () {
-          console.log(reader.result);
+          this_.props.onSelectFile(reader.result);
         }, false);
         
         reader.readAsText(entry);
