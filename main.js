@@ -19,8 +19,80 @@ var draw;
 var formatWKT = new ol.format.WKT();
 var formatGeoJSON = new ol.format.GeoJSON();
 var formatWFS = new ol.format.WFS();
+var formatGPX = new ol.format.GPX();
 var selectedFeature;
 var featureid = 0;
+
+var datawps =
+  '<?xml version="1.0" encoding="UTF-8"?>'+
+  '<wps:Execute version="1.0.0" service="WPS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wps/1.0.0" xmlns:wfs="http://www.opengis.net/wfs" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wcs="http://www.opengis.net/wcs/1.1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 http://schemas.opengis.net/wps/1.0.0/wpsAll.xsd">'+
+    '<ows:Identifier>geoavalanche:DangerIndex</ows:Identifier>'+
+    '<wps:DataInputs>'+
+      '<wps:Input>'+
+        '<ows:Identifier>FeatureCollection</ows:Identifier>'+
+        '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
+          '<wps:Body>'+
+            '<wps:Execute version="1.0.0" service="WPS">'+
+              '<ows:Identifier>geoavalanche:Crowd</ows:Identifier>'+
+              '<wps:DataInputs>'+
+                '<wps:Input>'+
+                  '<ows:Identifier>FeatureCollection</ows:Identifier>'+
+                  '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
+                    '<wps:Body>'+
+                      '<wps:Execute version="1.0.0" service="WPS">'+
+                        '<ows:Identifier>geoavalanche:Buffer</ows:Identifier>'+
+                        '<wps:DataInputs>'+
+                          '<wps:Input>'+
+                            '<ows:Identifier>FeatureCollection</ows:Identifier>'+
+                            '<wps:Data>'+
+                              '<wps:ComplexData mimeType="application/json"><![CDATA[XXXX]]></wps:ComplexData>'+
+                            '</wps:Data>'+
+                          '</wps:Input>'+
+                          '<wps:Input>'+
+                            '<ows:Identifier>distance</ows:Identifier>'+
+                            '<wps:Data>'+
+                              '<wps:LiteralData>5000</wps:LiteralData>'+
+                            '</wps:Data>'+
+                          '</wps:Input>'+
+                          '<wps:Input>'+
+                            '<ows:Identifier>quadrantSegments</ows:Identifier>'+
+                            '<wps:Data>'+
+                              '<wps:LiteralData>10</wps:LiteralData>'+
+                            '</wps:Data>'+
+                          '</wps:Input>'+
+                          '<wps:Input>'+
+                            '<ows:Identifier>capStyle</ows:Identifier>'+
+                            '<wps:Data>'+
+                              '<wps:LiteralData>1</wps:LiteralData>'+
+                            '</wps:Data>'+
+                          '</wps:Input>'+
+                        '</wps:DataInputs>'+
+                        '<wps:ResponseForm>'+
+                          '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
+                            '<ows:Identifier>result</ows:Identifier>'+
+                          '</wps:RawDataOutput>'+
+                        '</wps:ResponseForm>'+
+                      '</wps:Execute>'+
+                    '</wps:Body>'+
+                  '</wps:Reference>'+
+                '</wps:Input>'+
+              '</wps:DataInputs>'+
+              '<wps:ResponseForm>'+
+                '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
+                  '<ows:Identifier>result</ows:Identifier>'+
+                '</wps:RawDataOutput>'+
+              '</wps:ResponseForm>'+
+            '</wps:Execute>'+
+          '</wps:Body>'+
+        '</wps:Reference>'+
+      '</wps:Input>'+
+    '</wps:DataInputs>'+
+    '<wps:ResponseForm>'+
+      '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
+        '<ows:Identifier>result</ows:Identifier>'+
+      '</wps:RawDataOutput>'+
+    '</wps:ResponseForm>'+
+  '</wps:Execute>';
 
 var env = process.env.NODE_ENV;
 console.log('Environment variable NODE_ENV has been set to ' + env);
@@ -177,76 +249,7 @@ var onDrawEnd = function(evt) {
     var theColl = {type: "FeatureCollection", features: [theFeature]};
     if (window.console) console.log(JSON.stringify(theColl));
 
-    var datawps_ =
-      '<?xml version="1.0" encoding="UTF-8"?>'+
-      '<wps:Execute version="1.0.0" service="WPS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wps/1.0.0" xmlns:wfs="http://www.opengis.net/wfs" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wcs="http://www.opengis.net/wcs/1.1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 http://schemas.opengis.net/wps/1.0.0/wpsAll.xsd">'+
-        '<ows:Identifier>geoavalanche:DangerIndex</ows:Identifier>'+
-        '<wps:DataInputs>'+
-          '<wps:Input>'+
-            '<ows:Identifier>FeatureCollection</ows:Identifier>'+
-            '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
-              '<wps:Body>'+
-                '<wps:Execute version="1.0.0" service="WPS">'+
-                  '<ows:Identifier>geoavalanche:Crowd</ows:Identifier>'+
-                  '<wps:DataInputs>'+
-                    '<wps:Input>'+
-                      '<ows:Identifier>FeatureCollection</ows:Identifier>'+
-                      '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
-                        '<wps:Body>'+
-                          '<wps:Execute version="1.0.0" service="WPS">'+
-                            '<ows:Identifier>geoavalanche:Buffer</ows:Identifier>'+
-                            '<wps:DataInputs>'+
-                              '<wps:Input>'+
-                                '<ows:Identifier>FeatureCollection</ows:Identifier>'+
-                                '<wps:Data>'+
-                                  '<wps:ComplexData mimeType="application/json"><![CDATA['+JSON.stringify(theColl)+']]></wps:ComplexData>'+
-                                '</wps:Data>'+
-                              '</wps:Input>'+
-                              '<wps:Input>'+
-                                '<ows:Identifier>distance</ows:Identifier>'+
-                                '<wps:Data>'+
-                                  '<wps:LiteralData>5000</wps:LiteralData>'+
-                                '</wps:Data>'+
-                              '</wps:Input>'+
-                              '<wps:Input>'+
-                                '<ows:Identifier>quadrantSegments</ows:Identifier>'+
-                                '<wps:Data>'+
-                                  '<wps:LiteralData>10</wps:LiteralData>'+
-                                '</wps:Data>'+
-                              '</wps:Input>'+
-                              '<wps:Input>'+
-                                '<ows:Identifier>capStyle</ows:Identifier>'+
-                                '<wps:Data>'+
-                                  '<wps:LiteralData>1</wps:LiteralData>'+
-                                '</wps:Data>'+
-                              '</wps:Input>'+
-                            '</wps:DataInputs>'+
-                            '<wps:ResponseForm>'+
-                              '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
-                                '<ows:Identifier>result</ows:Identifier>'+
-                              '</wps:RawDataOutput>'+
-                            '</wps:ResponseForm>'+
-                          '</wps:Execute>'+
-                        '</wps:Body>'+
-                      '</wps:Reference>'+
-                    '</wps:Input>'+
-                  '</wps:DataInputs>'+
-                  '<wps:ResponseForm>'+
-                    '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
-                      '<ows:Identifier>result</ows:Identifier>'+
-                    '</wps:RawDataOutput>'+
-                  '</wps:ResponseForm>'+
-                '</wps:Execute>'+
-              '</wps:Body>'+
-            '</wps:Reference>'+
-          '</wps:Input>'+
-        '</wps:DataInputs>'+
-        '<wps:ResponseForm>'+
-          '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
-            '<ows:Identifier>result</ows:Identifier>'+
-          '</wps:RawDataOutput>'+
-        '</wps:ResponseForm>'+
-      '</wps:Execute>';
+    var datawps_ = datawps.replace("XXXX", JSON.stringify(theColl));
 
     if (window.console) console.log('POST', config.geoavalanche.urlwps, datawps_);
     $.ajax({
@@ -328,76 +331,7 @@ var onSelectAddress = function(lat, lng){
 
   var theColl = {type: "FeatureCollection", features: [theFeature]};
   if (window.console) console.log(JSON.stringify(theColl));
-    var datawps_ =
-      '<?xml version="1.0" encoding="UTF-8"?>'+
-      '<wps:Execute version="1.0.0" service="WPS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wps/1.0.0" xmlns:wfs="http://www.opengis.net/wfs" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wcs="http://www.opengis.net/wcs/1.1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 http://schemas.opengis.net/wps/1.0.0/wpsAll.xsd">'+
-        '<ows:Identifier>geoavalanche:DangerIndex</ows:Identifier>'+
-        '<wps:DataInputs>'+
-          '<wps:Input>'+
-            '<ows:Identifier>FeatureCollection</ows:Identifier>'+
-            '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
-              '<wps:Body>'+
-                '<wps:Execute version="1.0.0" service="WPS">'+
-                  '<ows:Identifier>geoavalanche:Crowd</ows:Identifier>'+
-                  '<wps:DataInputs>'+
-                    '<wps:Input>'+
-                      '<ows:Identifier>FeatureCollection</ows:Identifier>'+
-                      '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
-                        '<wps:Body>'+
-                          '<wps:Execute version="1.0.0" service="WPS">'+
-                            '<ows:Identifier>geoavalanche:Buffer</ows:Identifier>'+
-                            '<wps:DataInputs>'+
-                              '<wps:Input>'+
-                                '<ows:Identifier>FeatureCollection</ows:Identifier>'+
-                                '<wps:Data>'+
-                                  '<wps:ComplexData mimeType="application/json"><![CDATA['+JSON.stringify(theColl)+']]></wps:ComplexData>'+
-                                '</wps:Data>'+
-                              '</wps:Input>'+
-                              '<wps:Input>'+
-                                '<ows:Identifier>distance</ows:Identifier>'+
-                                '<wps:Data>'+
-                                  '<wps:LiteralData>5000</wps:LiteralData>'+
-                                '</wps:Data>'+
-                              '</wps:Input>'+
-                              '<wps:Input>'+
-                                '<ows:Identifier>quadrantSegments</ows:Identifier>'+
-                                '<wps:Data>'+
-                                  '<wps:LiteralData>10</wps:LiteralData>'+
-                                '</wps:Data>'+
-                              '</wps:Input>'+
-                              '<wps:Input>'+
-                                '<ows:Identifier>capStyle</ows:Identifier>'+
-                                '<wps:Data>'+
-                                  '<wps:LiteralData>1</wps:LiteralData>'+
-                                '</wps:Data>'+
-                              '</wps:Input>'+
-                            '</wps:DataInputs>'+
-                            '<wps:ResponseForm>'+
-                              '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
-                                '<ows:Identifier>result</ows:Identifier>'+
-                              '</wps:RawDataOutput>'+
-                            '</wps:ResponseForm>'+
-                          '</wps:Execute>'+
-                        '</wps:Body>'+
-                      '</wps:Reference>'+
-                    '</wps:Input>'+
-                  '</wps:DataInputs>'+
-                  '<wps:ResponseForm>'+
-                    '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
-                      '<ows:Identifier>result</ows:Identifier>'+
-                    '</wps:RawDataOutput>'+
-                  '</wps:ResponseForm>'+
-                '</wps:Execute>'+
-              '</wps:Body>'+
-            '</wps:Reference>'+
-          '</wps:Input>'+
-        '</wps:DataInputs>'+
-        '<wps:ResponseForm>'+
-          '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
-            '<ows:Identifier>result</ows:Identifier>'+
-          '</wps:RawDataOutput>'+
-        '</wps:ResponseForm>'+
-      '</wps:Execute>';
+    var datawps_ = datawps.replace("XXXX", JSON.stringify(theColl));
 
     if (window.console) console.log('POST', config.geoavalanche.urlwps, datawps_);
     $.ajax({
@@ -426,13 +360,41 @@ var onSelectAddress = function(lat, lng){
 };
 
 var onSelectFile = function(filecontent){
-  if (window.console) console.log("TheApp.onSelectFile()", "filecontent", filecontent);
-  var formatGPX = new ol.format.GPX();
-  if (window.console) console.log(formatGPX.readProjection(filecontent));
+  if (window.console) console.log("TheApp.onSelectFile()", "projection", formatGPX.readProjection(filecontent));
+  map.addInteraction(select_);
+
   var newfeatures = formatGPX.readFeatures(filecontent, {featureProjection:'EPSG:3857'});
   if (window.console) console.log(newfeatures);
-  vectorSource.addFeatures(newfeatures);
-  map.getView().fit(vector.getSource().getExtent(), map.getSize());
+
+  var theColl = JSON.parse(formatGeoJSON.writeFeatures(newfeatures));
+
+  var datawps_ = datawps.replace("XXXX", JSON.stringify(theColl));
+
+  if (window.console) console.log('POST', config.geoavalanche.urlwps, datawps_);
+  $.ajax({
+    type: "POST",
+    url: config.geoavalanche.urlwps,
+    data: datawps_,
+    contentType: 'text/xml',
+    beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', 'Basic ' + btoa(config.geoavalanche.auth));
+    },
+    success: function(data) {
+      if (window.console) console.log('success()');
+      var newfeatures = formatWFS.readFeatures(data);
+      if (window.console) console.log(newfeatures);
+
+      vectorSource.addFeatures(newfeatures);
+      saveFeatures(newfeatures);
+      map.getView().fit(vector.getSource().getExtent(), map.getSize());
+    },
+    error: function(xhr, desc, err) {
+      if (window.console) console.log('error()', xhr, desc, err);
+    },
+    context: this
+  });
+
+  if (window.console) console.log("TheApp.onSelectFile() ... done");
 }
 
 var TheApp = React.createClass({
