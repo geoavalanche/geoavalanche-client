@@ -188,26 +188,10 @@ var selectedStyleFunction = function(feature, resolution) {
   var properties = feature.getProperties();
   var style = new ol.style.Style({
     stroke: new ol.style.Stroke({
-      color: 'green',
+      color: 'yellow',
       width: 3
     })
   });
-  if (properties.dangerindex === '1') {
-    style = new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: 'red',
-        width: 3
-      })
-    });
-  }
-  if (properties.dangerindex === '2') {
-    style = new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: 'black',
-        width: 3
-      })
-    });
-  }
   return [style];
 };
 
