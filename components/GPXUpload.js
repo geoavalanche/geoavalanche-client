@@ -1,60 +1,39 @@
 var React = require('react');
-var Dropzone = require('react-dropzone');
+var Button = require('react-bootstrap').Button;
 
 var GPXUpload = React.createClass({
     getInitialState() {
-      return {
-        files:[]
-      };
+      return { };
     },
 
-    onDrop: function (files) {
-      if (window.console) console.log("GPXUpload.onDrop()", files);
-      this.setState({
-        files: files
-      });
-      files.forEach(function(entry, index) {
-        console.log(entry);
+    onClick: function(e) {
+      document.getElementById('theInputFile').click();
+    },
+
+    onChange: function(e) {
+      if (window.console) console.log("GPXUpload.onChange()", e.target.files);
+      for (var i = 0; i < e.target.files.length; i++) {
+        var theFile = e.target.files[i];
         var this_ = this;
         var reader  = new FileReader();
         reader.addEventListener("loadend", function () {
           this_.props.onSelectFile(reader.result);
         }, false);
-        
-        reader.readAsText(entry);
-      }, this);
+        reader.readAsText(theFile);
+      }
     },
-
+    
     render: function () {
-      if (window.console) console.log("GPXUpload.render()", this.state.files);
-      var style = {
-        width: 200,
-        //height: 200,
-        borderWidth: 2,
-        borderColor: '#666',
-        borderStyle: 'dashed',
-        borderRadius: 5
-      };
-      var activeStyle = {
-        borderStyle: 'solid',
-        backgroundColor: '#eee'
-      };
-      var rejectStyle = {
-        borderStyle: 'solid',
-        backgroundColor: '#ffdddd'
-      };
+      if (window.console) console.log("GPXUpload.render()");
+      var inline={display: 'inline'};
+      var none={display: 'none'};
       return (
-        <Dropzone
-          ref="dropzone"
-          onDrop={this.onDrop}
-          disableClick={false}
-          multiple={false}
-          style={style}
-          activeStyle={activeStyle}
-          rejectStyle={rejectStyle}
-        >
-          <span>.GPX</span>
-        </Dropzone>
+        <div style={inline}>
+          <Button onClick={this.onClick}>.GPX</Button>
+          <input type="file" id="theInputFile"
+            style={none}
+            onChange={this.onChange} />
+        </div>
       );
     }
 });

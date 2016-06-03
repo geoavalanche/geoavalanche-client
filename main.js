@@ -444,9 +444,9 @@ var TheApp = React.createClass({
       <Button onClick={this.deleteFeature}><Glyphicon glyph="trash" /></Button>
       <Button onClick={this.drawLineString}>Disegna il tuo percorso</Button>
       <Button onClick={this.drawPoint}>Seleziona un punto sulla mappa</Button>
-      </form>
       <GPXUpload onSelectFile={onSelectFile} />
       <MapzenSearchAddress url={config.mapzen.url} onSelectAddress={onSelectAddress} />
+      </form>
       </div>
     );
   }
