@@ -1,8 +1,8 @@
 {
   "scripts": {
     "local": "browserify main.js -o public/bundle.js && http-server",
-    "start": "export NODE_ENV=development && browserify main.js -t envify -o public/bundle.js && node index.js",
-    "startw": "set NODE_ENV=development& browserify main.js -t envify -o public/bundle.js & node index.js",
+    "dev": "export NODE_ENV=development && browserify main.js -t envify -o public/bundle.js && node index.js",
+    "devw": "set NODE_ENV=development& browserify main.js -t envify -o public/bundle.js & node index.js",
     "test": "export APP_GASERV_HOST=${DOCKER_HOST_IP} && export NODE_ENV=testing && browserify main.js -t envify -o public/bundle.js && node index.js",
     "testw": "set NODE_ENV=testing& browserify main.js -t envify -o public/bundle.js & node index.js"
   },
