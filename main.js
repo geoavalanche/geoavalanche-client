@@ -235,7 +235,7 @@ var onDrawEnd = function(evt) {
 
     var datawps_ = datawps.replace("XXXX", JSON.stringify(theColl));
 
-    if (window.console) console.log('POST', config.geoavalanche.urlwps, datawps_);
+    if (window.console) console.log('POST', config.geoavalanche.urlwps);
     $.ajax({
       type: "POST",
       url: config.geoavalanche.urlwps,
@@ -245,7 +245,7 @@ var onDrawEnd = function(evt) {
           xhr.setRequestHeader('Authorization', 'Basic ' + btoa(config.geoavalanche.auth));
       },
       success: function(data) {
-        if (window.console) console.log('success()', data);
+        if (window.console) console.log('success()');
         var newfeatures = formatWFS.readFeatures(data);
         if (window.console) console.log(newfeatures);
         vectorSource.removeFeature(feature);
@@ -269,7 +269,7 @@ var saveFeatures = function(features) {
       featureNS: config.geoavalanche.featureNS,
       featureType: config.geoavalanche.featureType
     });
-    if (window.console) console.log('POST', config.geoavalanche.urlwfs, serializer_.serializeToString(node));
+    if (window.console) console.log('POST', config.geoavalanche.urlwfs, node);
     $.ajax({
       type: "POST",
       url: config.geoavalanche.urlwfs,
@@ -317,7 +317,7 @@ var onSelectAddress = function(lat, lng){
   if (window.console) console.log(JSON.stringify(theColl));
     var datawps_ = datawps.replace("XXXX", JSON.stringify(theColl));
 
-    if (window.console) console.log('POST', config.geoavalanche.urlwps, datawps_);
+    if (window.console) console.log('POST', config.geoavalanche.urlwps);
     $.ajax({
       type: "POST",
       url: config.geoavalanche.urlwps,
@@ -327,7 +327,7 @@ var onSelectAddress = function(lat, lng){
           xhr.setRequestHeader('Authorization', 'Basic ' + btoa('admin:geoserver'));
       },
       success: function(data) {
-        if (window.console) console.log('success()', data);
+        if (window.console) console.log('success()');
         var newfeatures = formatWFS.readFeatures(data);
         if (window.console) console.log(newfeatures);
         vectorSource.addFeatures(newfeatures);
@@ -354,7 +354,7 @@ var onSelectFile = function(filecontent){
 
   var datawps_ = datawps.replace("XXXX", JSON.stringify(theColl));
 
-  if (window.console) console.log('POST', config.geoavalanche.urlwps, datawps_);
+  if (window.console) console.log('POST', config.geoavalanche.urlwps);
   $.ajax({
     type: "POST",
     url: config.geoavalanche.urlwps,
