@@ -58,7 +58,13 @@ If you want to pass the docker host variable to the container then the command i
  
 .. code-block:: console
  
-     docker build --build-arg DOCKER_HOST_IP=$(docker-machine ip) -t geoavalanche/geoavalanche-client .
+    docker build --build-arg DOCKER_HOST_IP=$(docker-machine ip) -t geoavalanche/geoavalanche-client .
+
+ Otherwise build that without arguments:
+
+ .. code-block:: console
+ 
+ 	docker build -t geoavalanche/geoavalanche-client .    
 
 Run the container with the built image:
 
@@ -69,8 +75,14 @@ Run the container with the built image:
 Docker Compose
 ^^^^^^^^^^^^^^
 
-Run the orchestration of the GeoAvalanche containers with this command:
+If you want to pass the docker host variable to the orchestration of the GeoAvalanche containers then use this command:
 
 .. code-block:: console
 
     DOCKER_HOST_IP=$(docker-machine ip) docker-compose up
+
+Otherwise run simply:
+
+.. code-block:: console
+
+   docker-compose up 
