@@ -1,7 +1,12 @@
 version: '2'
 services:
     gaclient:
-        build: .
+        # build: .
+        build:
+            context: .
+            args:
+                - DOCKER_HOST
+                #- DOCKER_HOST_IP
         command: npm run test
         volumes:
               - .:/usr/src/app
@@ -10,7 +15,7 @@ services:
         # links:
         #       - gaserver
         environment:
-              # - DOCKER_HOST
+              - DOCKER_HOST
               - DOCKER_HOST_IP
         ports:
               - "3001:3001"
