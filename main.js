@@ -124,20 +124,12 @@ console.log(config.geoavalanche);
 var vectorStyleFunction = function(feature) {
   var properties = feature.getProperties();
   var style = new ol.style.Style({
-    stroke: new ol.style.Stroke({
-      color: 'green',
-      width: 1
-    }),
     fill: new ol.style.Fill({
       color: 'green'
     })
   });
   if (properties.dangerindex === '1') {
     style = new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: 'red',
-        width: 1
-      }),
       fill: new ol.style.Fill({
         color: 'red'
       })
@@ -145,10 +137,6 @@ var vectorStyleFunction = function(feature) {
   }
   if (properties.dangerindex === '2') {
     style = new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: 'black',
-        width: 1
-      }),
       fill: new ol.style.Fill({
         color: 'black'
       })
@@ -190,11 +178,35 @@ var selectedStyleFunction = function(feature, resolution) {
     stroke: new ol.style.Stroke({
       color: 'yellow',
       width: 3
+    }),
+    fill: new ol.style.Fill({
+      color: 'green'
     })
   });
+  if (properties.dangerindex === '1') {
+    style = new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: 'yellow',
+        width: 3
+      }),
+      fill: new ol.style.Fill({
+        color: 'red'
+      })
+    });
+  }
+  if (properties.dangerindex === '2') {
+    style = new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: 'yellow',
+        width: 3
+      }),
+      fill: new ol.style.Fill({
+        color: 'black'
+      })
+    });
+  }
   return [style];
 };
-
 var select_ = new ol.interaction.Select({
     style: selectedStyleFunction
 });
