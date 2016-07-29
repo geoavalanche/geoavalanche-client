@@ -25,73 +25,90 @@ var featureid = 0;
 
 var datawps =
   '<?xml version="1.0" encoding="UTF-8"?>'+
-  '<wps:Execute version="1.0.0" service="WPS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wps/1.0.0" xmlns:wfs="http://www.opengis.net/wfs" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wcs="http://www.opengis.net/wcs/1.1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 http://schemas.opengis.net/wps/1.0.0/wpsAll.xsd">'+
-    '<ows:Identifier>geoavalanche:DangerIndex</ows:Identifier>'+
-    '<wps:DataInputs>'+
-      '<wps:Input>'+
-        '<ows:Identifier>FeatureCollection</ows:Identifier>'+
-        '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
-          '<wps:Body>'+
-            '<wps:Execute version="1.0.0" service="WPS">'+
-              '<ows:Identifier>geoavalanche:Crowd</ows:Identifier>'+
-              '<wps:DataInputs>'+
-                '<wps:Input>'+
-                  '<ows:Identifier>FeatureCollection</ows:Identifier>'+
-                  '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
-                    '<wps:Body>'+
-                      '<wps:Execute version="1.0.0" service="WPS">'+
-                        '<ows:Identifier>geoavalanche:Buffer</ows:Identifier>'+
-                        '<wps:DataInputs>'+
-                          '<wps:Input>'+
-                            '<ows:Identifier>FeatureCollection</ows:Identifier>'+
-                            '<wps:Data>'+
-                              '<wps:ComplexData mimeType="application/json"><![CDATA[XXXX]]></wps:ComplexData>'+
-                            '</wps:Data>'+
-                          '</wps:Input>'+
-                          '<wps:Input>'+
-                            '<ows:Identifier>distance</ows:Identifier>'+
-                            '<wps:Data>'+
-                              '<wps:LiteralData>5000</wps:LiteralData>'+
-                            '</wps:Data>'+
-                          '</wps:Input>'+
-                          '<wps:Input>'+
-                            '<ows:Identifier>quadrantSegments</ows:Identifier>'+
-                            '<wps:Data>'+
-                              '<wps:LiteralData>10</wps:LiteralData>'+
-                            '</wps:Data>'+
-                          '</wps:Input>'+
-                          '<wps:Input>'+
-                            '<ows:Identifier>capStyle</ows:Identifier>'+
-                            '<wps:Data>'+
-                              '<wps:LiteralData>1</wps:LiteralData>'+
-                            '</wps:Data>'+
-                          '</wps:Input>'+
-                        '</wps:DataInputs>'+
-                        '<wps:ResponseForm>'+
-                          '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
-                            '<ows:Identifier>result</ows:Identifier>'+
-                          '</wps:RawDataOutput>'+
-                        '</wps:ResponseForm>'+
-                      '</wps:Execute>'+
-                    '</wps:Body>'+
-                  '</wps:Reference>'+
-                '</wps:Input>'+
-              '</wps:DataInputs>'+
-              '<wps:ResponseForm>'+
-                '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
-                  '<ows:Identifier>result</ows:Identifier>'+
-                '</wps:RawDataOutput>'+
-              '</wps:ResponseForm>'+
-            '</wps:Execute>'+
-          '</wps:Body>'+
-        '</wps:Reference>'+
-      '</wps:Input>'+
-    '</wps:DataInputs>'+
-    '<wps:ResponseForm>'+
-      '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
-        '<ows:Identifier>result</ows:Identifier>'+
-      '</wps:RawDataOutput>'+
-    '</wps:ResponseForm>'+
+    '<wps:Execute version="1.0.0" service="WPS" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.opengis.net/wps/1.0.0" xmlns:wfs="http://www.opengis.net/wfs" xmlns:wps="http://www.opengis.net/wps/1.0.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:wcs="http://www.opengis.net/wcs/1.1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xsi:schemaLocation="http://www.opengis.net/wps/1.0.0 http://schemas.opengis.net/wps/1.0.0/wpsAll.xsd">'+
+     '<ows:Identifier>geoavalanche:DangerIndex</ows:Identifier>'+
+     '<wps:DataInputs>'+
+        '<wps:Input>'+
+           '<ows:Identifier>FeatureCollection</ows:Identifier>'+
+           '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
+              '<wps:Body>'+
+                 '<wps:Execute version="1.0.0" service="WPS">'+
+                    '<ows:Identifier>geoavalanche:SnowPack</ows:Identifier>'+
+                    '<wps:DataInputs>'+
+                       '<wps:Input>'+
+                          '<ows:Identifier>FeatureCollection</ows:Identifier>'+
+                          '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
+                             '<wps:Body>'+
+                                '<wps:Execute version="1.0.0" service="WPS">'+
+                                   '<ows:Identifier>geoavalanche:Crowd</ows:Identifier>'+
+                                   '<wps:DataInputs>'+
+                                      '<wps:Input>'+
+                                         '<ows:Identifier>FeatureCollection</ows:Identifier>'+
+                                         '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
+                                            '<wps:Body>'+
+                                               '<wps:Execute version="1.0.0" service="WPS">'+
+                                                  '<ows:Identifier>geoavalanche:Buffer</ows:Identifier>'+
+                                                  '<wps:DataInputs>'+
+                                                     '<wps:Input>'+
+                                                        '<ows:Identifier>FeatureCollection</ows:Identifier>'+
+                                                        '<wps:Data>'+
+                                                           '<wps:ComplexData mimeType="application/json"><![CDATA[XXXX]]></wps:ComplexData>'+
+                                                        '</wps:Data>'+
+                                                     '</wps:Input>'+
+                                                     '<wps:Input>'+
+                                                        '<ows:Identifier>sourceCRS</ows:Identifier>'+
+                                                        '<wps:Data>'+
+                                                           '<wps:LiteralData>EPSG:3857</wps:LiteralData>'+
+                                                        '</wps:Data>'+
+                                                     '</wps:Input>'+
+                                                     '<wps:Input>'+
+                                                        '<ows:Identifier>targetCRS</ows:Identifier>'+
+                                                        '<wps:Data>'+
+                                                           '<wps:LiteralData>EPSG:4326</wps:LiteralData>'+
+                                                        '</wps:Data>'+
+                                                     '</wps:Input>'+
+                                                  '</wps:DataInputs>'+
+                                                  '<wps:ResponseForm>'+
+                                                     '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
+                                                        '<ows:Identifier>result</ows:Identifier>'+
+                                                     '</wps:RawDataOutput>'+
+                                                  '</wps:ResponseForm>'+
+                                               '</wps:Execute>'+
+                                            '</wps:Body>'+
+                                         '</wps:Reference>'+
+                                      '</wps:Input>'+
+                                      '<wps:Input>'+
+                                         '<ows:Identifier>sourceCRS</ows:Identifier>'+
+                                         '<wps:Data>'+
+                                            '<wps:LiteralData>EPSG:4326</wps:LiteralData>'+
+                                         '</wps:Data>'+
+                                      '</wps:Input>'+
+                                   '</wps:DataInputs>'+
+                                   '<wps:ResponseForm>'+
+                                      '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
+                                         '<ows:Identifier>result</ows:Identifier>'+
+                                      '</wps:RawDataOutput>'+
+                                   '</wps:ResponseForm>'+
+                                '</wps:Execute>'+
+                             '</wps:Body>'+
+                          '</wps:Reference>'+
+                       '</wps:Input>'+
+                    '</wps:DataInputs>'+
+                    '<wps:ResponseForm>'+
+                       '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
+                          '<ows:Identifier>result</ows:Identifier>'+
+                       '</wps:RawDataOutput>'+
+                    '</wps:ResponseForm>'+
+                 '</wps:Execute>'+
+              '</wps:Body>'+
+           '</wps:Reference>'+
+        '</wps:Input>'+
+     '</wps:DataInputs>'+
+     '<wps:ResponseForm>'+
+        '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
+           '<ows:Identifier>result</ows:Identifier>'+
+        '</wps:RawDataOutput>'+
+     '</wps:ResponseForm>'+
   '</wps:Execute>';
 
 var env = process.env.NODE_ENV;
@@ -258,12 +275,12 @@ var onDrawEnd = function(evt) {
       },
       success: function(data) {
         if (window.console) console.log('success()');
-        var newfeatures = formatWFS.readFeatures(data);
+        var newfeatures = formatWFS.readFeatures(data, {dataProjection:'EPSG:4326', featureProjection:'EPSG:3857'});
         if (window.console) console.log(newfeatures);
         vectorSource.removeFeature(feature);
         vectorSource.refresh();
         vectorSource.addFeatures(newfeatures);
-        saveFeatures(newfeatures);
+        //saveFeatures(newfeatures);
         map.getView().fit(vector.getSource().getExtent(), map.getSize());
       },
       error: function(xhr, desc, err) {
@@ -340,10 +357,10 @@ var onSelectAddress = function(lat, lng){
       },
       success: function(data) {
         if (window.console) console.log('success()');
-        var newfeatures = formatWFS.readFeatures(data);
+        var newfeatures = formatWFS.readFeatures(data, {dataProjection:'EPSG:4326', featureProjection:'EPSG:3857'});
         if (window.console) console.log(newfeatures);
         vectorSource.addFeatures(newfeatures);
-        saveFeatures(newfeatures);
+        //saveFeatures(newfeatures);
         map.getView().fit(vector.getSource().getExtent(), map.getSize());
       },
       error: function(xhr, desc, err) {
@@ -377,11 +394,11 @@ var onSelectFile = function(filecontent){
     },
     success: function(data) {
       if (window.console) console.log('success()');
-      var newfeatures = formatWFS.readFeatures(data);
+      var newfeatures = formatWFS.readFeatures(data, {dataProjection:'EPSG:4326', featureProjection:'EPSG:3857'});
       if (window.console) console.log(newfeatures);
 
       vectorSource.addFeatures(newfeatures);
-      saveFeatures(newfeatures);
+      //saveFeatures(newfeatures);
       map.getView().fit(vector.getSource().getExtent(), map.getSize());
     },
     error: function(xhr, desc, err) {
