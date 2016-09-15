@@ -471,8 +471,8 @@ var TheApp = React.createClass({
       <form>
       <Button onClick={this.fitExtent}><Glyphicon glyph="fullscreen" /></Button>
       <Button onClick={this.deleteFeature}><Glyphicon glyph="trash" /></Button>
-      <Button onClick={this.drawLineString}>Disegna il tuo percorso</Button>
-      <Button onClick={this.drawPoint}>Seleziona un punto sulla mappa</Button>
+      <Button onClick={this.drawLineString}>Draw your route</Button>
+      <Button onClick={this.drawPoint}>Draw a point on the map</Button>
       <GPXUpload onSelectFile={onSelectFile} />
       <MapzenSearchAddress url={config.mapzen.url} onSelectAddress={onSelectAddress} />
       </form>

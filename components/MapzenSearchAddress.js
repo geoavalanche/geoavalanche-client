@@ -58,7 +58,7 @@ var MapzenSearchAddress = React.createClass({
         <Select.Async
         name="selected-address"
         ref="addressSelect"
-        placeholder="Inserisci la localita' di tuo interesse ..."
+        placeholder="Search your peak or mountain place..."
         value={this.state.value}
         //autofocus
         //options={options}

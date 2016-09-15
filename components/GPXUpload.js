@@ -29,7 +29,7 @@ var GPXUpload = React.createClass({
       var none={display: 'none'};
       return (
         <div style={inline}>
-          <Button onClick={this.onClick}>.GPX</Button>
+          <Button onClick={this.onClick}>Upload a GPX route</Button>
           <input type="file" id="theInputFile"
             style={none}
             onChange={this.onChange} />
