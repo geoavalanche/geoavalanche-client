@@ -142,20 +142,20 @@ var vectorStyleFunction = function(feature) {
   var properties = feature.getProperties();
   var style = new ol.style.Style({
     fill: new ol.style.Fill({
-      color: 'green'
+      color: [0, 255, 0, 0.5]   //'green'
     })
   });
   if (properties.dangerindex === '1') {
     style = new ol.style.Style({
       fill: new ol.style.Fill({
-        color: 'red'
+        color: [255, 0, 0, 0.5]   //'red'
       })
     });
   }
   if (properties.dangerindex === '2') {
     style = new ol.style.Style({
       fill: new ol.style.Fill({
-        color: 'black'
+        color: [0, 0, 0, 0.5]   //'black'
       })
     });
   }
@@ -197,7 +197,7 @@ var selectedStyleFunction = function(feature, resolution) {
       width: 3
     }),
     fill: new ol.style.Fill({
-      color: 'green'
+      color: [0, 255, 0, 0.5]   //'green'
     })
   });
   if (properties.dangerindex === '1') {
@@ -207,7 +207,7 @@ var selectedStyleFunction = function(feature, resolution) {
         width: 3
       }),
       fill: new ol.style.Fill({
-        color: 'red'
+        color: [255, 0, 0, 0.5]   //'red'
       })
     });
   }
@@ -218,7 +218,7 @@ var selectedStyleFunction = function(feature, resolution) {
         width: 3
       }),
       fill: new ol.style.Fill({
-        color: 'black'
+        color: [0, 0, 0, 0.5]   //'black'
       })
     });
   }
