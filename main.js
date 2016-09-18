@@ -8,9 +8,11 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var ol = require('openlayers');
 var Button = require('react-bootstrap').Button;
+var Navbar = require('react-bootstrap').Navbar;
 var Glyphicon = require('react-bootstrap').Glyphicon;
 var MapzenSearchAddress = require('./components/MapzenSearchAddress');
 var GPXUpload = require('./components/GPXUpload');
+var Mapskin = require('./components/styles/icons/mapskin.css');
 
 var vectorSource;
 var formatwfs_ = new ol.format.WFS();
@@ -410,6 +412,26 @@ var onSelectFile = function(filecontent){
   if (window.console) console.log("TheApp.onSelectFile() ... done");
 }
 
+var Logo = React.createClass({
+  render: function() {
+    return (
+          <a href="/">
+            <img src="/geoavalanche.png" height="70" width="150" alt="GeoAvalanche" />
+          </a>
+    );
+  }
+});
+
+var MyGeoss = React.createClass({
+  render: function() {
+    return (
+          <a href="/">
+            <img src="/mygeoss.png" height="70" width="30" alt="MYGEOSS" />
+          </a>
+    );
+  }
+});
+
 var TheApp = React.createClass({
   getInitialState: function() {
     return {};
@@ -469,6 +491,19 @@ var TheApp = React.createClass({
     return (
       <div>
       <form>
+      <Navbar>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <Logo></Logo>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+        </Navbar.Header>
+        <Navbar.Collapse>
+          <Navbar.Text>
+            <h2>AVALANCHE RISK INSIGHT</h2>
+          </Navbar.Text>
+        </Navbar.Collapse>
+      </Navbar>
       <Button onClick={this.fitExtent}><Glyphicon glyph="fullscreen" /></Button>
       <Button onClick={this.deleteFeature}><Glyphicon glyph="trash" /></Button>
       <Button onClick={this.drawLineString}>Draw your route</Button>
