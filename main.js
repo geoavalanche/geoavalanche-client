@@ -188,7 +188,19 @@ var map = new ol.Map({
   view: new ol.View({
     center: [1386513, 5149715],
     zoom: 6
-  })
+  }),
+  controls: ol.control.defaults({
+      attributionOptions: ({
+          collapsible: false
+      })
+  }).extend([
+      new ol.control.ZoomSlider(),
+      new ol.control.ScaleLine(),
+      new ol.control.MousePosition({
+          coordinateFormat: ol.coordinate.createStringXY(4),
+          projection: 'EPSG:4326'
+      })
+  ])
 });
 
 var selectedStyleFunction = function(feature, resolution) {
