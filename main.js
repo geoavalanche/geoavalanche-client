@@ -182,6 +182,13 @@ var TheCaptionControl = function(opt_options) {
 
     var options = opt_options || {};
 
+    var legendP = document.createElement('p');
+    legendP.innerHTML = '<p style="background-color:red">Danger</p><p style="background-color:black;color:white">Very Danger</p><p style="background-color:green">Good</p>';
+    var legendDiv = document.createElement('div');
+    legendDiv.className = options.class + ' ol-unselectable';
+    legendDiv.appendChild(legendP);
+
+    
     var button = document.createElement('button');
     button.innerHTML = '?';
 
@@ -195,7 +202,8 @@ var TheCaptionControl = function(opt_options) {
 
     var element = document.createElement('div');
     element.className = 'the-caption ol-unselectable ol-control';
-    element.appendChild(button);
+    //element.appendChild(button);
+    element.appendChild(legendP);
 
     ol.control.Control.call(this, {
       element: element,
@@ -223,11 +231,8 @@ var map = new ol.Map({
       })
   }).extend([
       //new ol.control.ZoomSlider(),
+      //new ol.control.MousePosition({ coordinateFormat: ol.coordinate.createStringXY(4), projection: 'EPSG:4326' }),
       new ol.control.ScaleLine(),
-      new ol.control.MousePosition({
-          coordinateFormat: ol.coordinate.createStringXY(4),
-          projection: 'EPSG:4326'
-      }),
       new TheCaptionControl()
   ])
 });
@@ -553,7 +558,7 @@ var TheApp = React.createClass({
         </Navbar.Header>
         <Navbar.Collapse>
           <Navbar.Text>
-            <h2>AVALANCHE RISK INSIGHT</h2>
+            <h3>AVALANCHE RISK INSIGHT</h3>
           </Navbar.Text>
         </Navbar.Collapse>
       </Navbar>
