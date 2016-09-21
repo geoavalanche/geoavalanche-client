@@ -177,6 +177,34 @@ var vector = new ol.layer.Vector({
     style: vectorStyleFunction
 });
 
+var TheCaptionControl = function(opt_options) {
+    console.log("TheCaptionControl()");
+
+    var options = opt_options || {};
+
+    var button = document.createElement('button');
+    button.innerHTML = '?';
+
+    var this_ = this;
+    var handleTheCaption = function() {
+      console.log("handleTheCaption()");
+    };
+
+    button.addEventListener('click', handleTheCaption, false);
+    button.addEventListener('touchstart', handleTheCaption, false);
+
+    var element = document.createElement('div');
+    element.className = 'the-caption ol-unselectable ol-control';
+    element.appendChild(button);
+
+    ol.control.Control.call(this, {
+      element: element,
+      target: options.target
+    });
+
+};
+ol.inherits(TheCaptionControl, ol.control.Control);
+
 var map = new ol.Map({
   target: 'map',
   layers: [
@@ -194,12 +222,13 @@ var map = new ol.Map({
           collapsible: false
       })
   }).extend([
-      new ol.control.ZoomSlider(),
+      //new ol.control.ZoomSlider(),
       new ol.control.ScaleLine(),
       new ol.control.MousePosition({
           coordinateFormat: ol.coordinate.createStringXY(4),
           projection: 'EPSG:4326'
-      })
+      }),
+      new TheCaptionControl()
   ])
 });
 
@@ -497,6 +526,18 @@ var TheApp = React.createClass({
     if (window.console) console.log("TheApp.drawPoint() ... done");
   },
 
+  componentDidMount: function() {
+    window.addEventListener('resize', this.handleResize);
+  },
+
+  componentWillUnmount: function() {
+    window.removeEventListener('resize', this.handleResize);
+  },
+
+  handleResize: function(e) {
+    //map.updateSize()
+    //console.log("map.getSize()->",map.getSize(),window.innerWidth,window.innerHeight);
+  },
 
   render: function() {
     if (window.console) console.log("TheApp.render()");
