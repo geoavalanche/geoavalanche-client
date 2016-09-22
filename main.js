@@ -177,41 +177,49 @@ var vector = new ol.layer.Vector({
     style: vectorStyleFunction
 });
 
-var TheCaptionControl = function(opt_options) {
-    console.log("TheCaptionControl()");
+var theCaptionControl = function(opt_options) {
+    console.log("theCaptionControl()");
 
     var options = opt_options || {};
 
-    var legendP = document.createElement('p');
-    legendP.innerHTML = '<p style="background-color:red">Danger</p><p style="background-color:black;color:white">Very Danger</p><p style="background-color:green">Good</p>';
-    var legendDiv = document.createElement('div');
-    legendDiv.className = options.class + ' ol-unselectable';
-    legendDiv.appendChild(legendP);
-
+    var theInfo = document.createElement('div');
+    theInfo.innerHTML = '<p style="background-color:red">Danger</p><p style="background-color:black;color:white">Very Danger</p><p style="background-color:green">Good</p>';
+    theInfo.style.float = 'right';
+    theInfo.style.display = 'none';
     
-    var button = document.createElement('button');
-    button.innerHTML = '?';
+    var theButton = document.createElement('button');
+    theButton.innerHTML = 'i';
+    theButton.style.float = 'right';
+    theButton.style.display = 'block';
 
     var this_ = this;
     var handleTheCaption = function() {
-      console.log("handleTheCaption()");
+      console.log("handleTheCaption()", theInfo.style.display);
+      if (theInfo.style.display == 'block' || theInfo.style.display=='')
+      {
+          theInfo.style.display = 'none';
+      }
+      else 
+      {
+          theInfo.style.display = 'block';
+      }
     };
 
-    button.addEventListener('click', handleTheCaption, false);
-    button.addEventListener('touchstart', handleTheCaption, false);
+    theButton.addEventListener('click', handleTheCaption, false);
+    theButton.addEventListener('touchstart', handleTheCaption, false);
 
-    var element = document.createElement('div');
-    element.className = 'the-caption ol-unselectable ol-control';
-    //element.appendChild(button);
-    element.appendChild(legendP);
+    var theControl = document.createElement('div');
+    theControl.className = 'the-caption ol-control';
+    theControl.appendChild(theButton);
+    theControl.appendChild(theInfo);
 
     ol.control.Control.call(this, {
-      element: element,
+      element: theControl,
       target: options.target
     });
 
 };
-ol.inherits(TheCaptionControl, ol.control.Control);
+ol.inherits(theCaptionControl, ol.control.Control);
 
 var map = new ol.Map({
   target: 'map',
@@ -233,7 +241,7 @@ var map = new ol.Map({
       //new ol.control.ZoomSlider(),
       //new ol.control.MousePosition({ coordinateFormat: ol.coordinate.createStringXY(4), projection: 'EPSG:4326' }),
       new ol.control.ScaleLine(),
-      new TheCaptionControl()
+      new theCaptionControl()
   ])
 });
 
