@@ -357,6 +357,7 @@ select_.getFeatures().on('remove', onRemoveSelect, this);
 
 var onDrawEnd = function(evt) {
     if (window.console) console.log("TheApp.onDrawEnd()");
+    document.getElementById('map').style.cursor = 'wait';
     map.removeInteraction(draw);
     map.addInteraction(select_);
     //map.addInteraction(modify_);
@@ -387,6 +388,7 @@ var onDrawEnd = function(evt) {
           xhr.setRequestHeader('Authorization', 'Basic ' + btoa(config.geoavalanche.auth));
       },
       success: function(data) {
+        document.getElementById('map').style.cursor = 'default';
         if (window.console) console.log('success()');
         var newfeatures = formatWFS.readFeatures(data, {dataProjection:'EPSG:4326', featureProjection:'EPSG:3857'});
         if (window.console) console.log(newfeatures);
@@ -397,6 +399,7 @@ var onDrawEnd = function(evt) {
         map.getView().fit(vector.getSource().getExtent(), map.getSize());
       },
       error: function(xhr, desc, err) {
+        document.getElementById('map').style.cursor = 'default';
         if (window.console) console.log('error()', xhr, desc, err);
       },
       context: this
@@ -460,6 +463,7 @@ var onSelectAddress = function(lat, lng){
     var datawps_ = datawps.replace("XXXX", JSON.stringify(theColl));
 
     if (window.console) console.log('POST', config.geoavalanche.urlwps);
+    document.getElementById('map').style.cursor = 'wait';
     $.ajax({
       type: "POST",
       url: config.geoavalanche.urlwps,
@@ -469,6 +473,7 @@ var onSelectAddress = function(lat, lng){
           xhr.setRequestHeader('Authorization', 'Basic ' + btoa('admin:geoserver'));
       },
       success: function(data) {
+        document.getElementById('map').style.cursor = 'default';
         if (window.console) console.log('success()');
         var newfeatures = formatWFS.readFeatures(data, {dataProjection:'EPSG:4326', featureProjection:'EPSG:3857'});
         if (window.console) console.log(newfeatures);
@@ -477,6 +482,7 @@ var onSelectAddress = function(lat, lng){
         map.getView().fit(vector.getSource().getExtent(), map.getSize());
       },
       error: function(xhr, desc, err) {
+        document.getElementById('map').style.cursor = 'default';
         if (window.console) console.log('error()', xhr, desc, err);
       },
       context: this
