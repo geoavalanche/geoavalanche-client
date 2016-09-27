@@ -44,38 +44,95 @@ var datawps =
                                 '<wps:Execute version="1.0.0" service="WPS">'+
                                    '<ows:Identifier>geoavalanche:Crowd</ows:Identifier>'+
                                    '<wps:DataInputs>'+
-                                      '<wps:Input>'+
-                                         '<ows:Identifier>FeatureCollection</ows:Identifier>'+
-                                         '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
-                                            '<wps:Body>'+
-                                               '<wps:Execute version="1.0.0" service="WPS">'+
-                                                  '<ows:Identifier>geoavalanche:Buffer</ows:Identifier>'+
-                                                  '<wps:DataInputs>'+
-                                                     '<wps:Input>'+
-                                                        '<ows:Identifier>FeatureCollection</ows:Identifier>'+
-                                                        '<wps:Data>'+
-                                                           '<wps:ComplexData mimeType="application/json"><![CDATA[XXXX]]></wps:ComplexData>'+
-                                                        '</wps:Data>'+
-                                                     '</wps:Input>'+
-                                                     '<wps:Input>'+
-                                                        '<ows:Identifier>sourceCRS</ows:Identifier>'+
-                                                        '<wps:Data>'+
-                                                           '<wps:LiteralData>EPSG:3857</wps:LiteralData>'+
-                                                        '</wps:Data>'+
-                                                     '</wps:Input>'+
-                                                     '<wps:Input>'+
-                                                        '<ows:Identifier>targetCRS</ows:Identifier>'+
-                                                        '<wps:Data>'+
-                                                           '<wps:LiteralData>EPSG:4326</wps:LiteralData>'+
-                                                        '</wps:Data>'+
-                                                     '</wps:Input>'+
-                                                  '</wps:DataInputs>'+
-                                                  '<wps:ResponseForm>'+
-                                                     '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
-                                                        '<ows:Identifier>result</ows:Identifier>'+
-                                                     '</wps:RawDataOutput>'+
-                                                  '</wps:ResponseForm>'+
-                                               '</wps:Execute>'+
+                                     '<wps:Input>'+
+                                        '<ows:Identifier>FeatureCollection</ows:Identifier>'+
+                                        '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
+                                           '<wps:Body>'+
+                                              '<wps:Execute version="1.0.0" service="WPS">'+
+                                                 '<ows:Identifier>geoavalanche:ATEINorm</ows:Identifier>'+
+                                                 '<wps:DataInputs>'+
+                                                   '<wps:Input>'+
+                                                     '<ows:Identifier>dem</ows:Identifier>'+
+                                                     '<wps:Reference mimeType="image/tiff" xlink:href="http://geoserver/wcs" method="POST">'+
+                                                       '<wps:Body>'+
+                                                         '<wcs:GetCoverage service="WCS" version="1.1.1">'+
+                                                           '<ows:Identifier>geoavalanche:eu_dem_v11_E40N20_3857</ows:Identifier>'+
+                                                           '<wcs:DomainSubset>'+
+                                                             '<ows:BoundingBox crs="http://www.opengis.net/gml/srs/epsg.xml#3857">'+
+                                                               '<ows:LowerCorner>4000000.0 2000000.0</ows:LowerCorner>'+
+                                                               '<ows:UpperCorner>5000000.0 3000000.0</ows:UpperCorner>'+
+                                                             '</ows:BoundingBox>'+
+                                                           '</wcs:DomainSubset>'+
+                                                           '<wcs:Output format="image/tiff"/>'+
+                                                         '</wcs:GetCoverage>'+
+                                                       '</wps:Body>'+
+                                                     '</wps:Reference>'+
+                                                   '</wps:Input>'+
+                                                   '<wps:Input>'+
+                                                     '<ows:Identifier>clc</ows:Identifier>'+
+                                                     '<wps:Reference mimeType="image/tiff" xlink:href="http://geoserver/wcs" method="POST">'+
+                                                       '<wps:Body>'+
+                                                         '<wcs:GetCoverage service="WCS" version="1.1.1">'+
+                                                           '<ows:Identifier>geoavalanche:g100_clc12_V18_5_3857</ows:Identifier>'+
+                                                           '<wcs:DomainSubset>'+
+                                                             '<ows:BoundingBox crs="http://www.opengis.net/gml/srs/epsg.xml#3857">'+
+                                                               '<ows:LowerCorner>-2700000.0 -3090000.0</ows:LowerCorner>'+
+                                                               '<ows:UpperCorner>1.0048E7 5500000.0</ows:UpperCorner>'+
+                                                             '</ows:BoundingBox>'+
+                                                           '</wcs:DomainSubset>'+
+                                                           '<wcs:Output format="image/tiff"/>'+
+                                                         '</wcs:GetCoverage>'+
+                                                       '</wps:Body>'+
+                                                     '</wps:Reference>'+
+                                                   '</wps:Input>'+
+                                                    '<wps:Input>'+
+                                                       '<ows:Identifier>FeatureCollection</ows:Identifier>'+
+                                                       '<wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wps" method="POST">'+
+                                                          '<wps:Body>'+
+                                                             '<wps:Execute version="1.0.0" service="WPS">'+
+                                                                '<ows:Identifier>geoavalanche:Buffer</ows:Identifier>'+
+                                                                '<wps:DataInputs>'+
+                                                                   '<wps:Input>'+
+                                                                      '<ows:Identifier>FeatureCollection</ows:Identifier>'+
+                                                                      '<wps:Data>'+
+                                                                         '<wps:ComplexData mimeType="application/json"><![CDATA[XXXX]]></wps:ComplexData>'+
+                                                                      '</wps:Data>'+
+                                                                   '</wps:Input>'+
+                                                                   '<wps:Input>'+
+                                                                      '<ows:Identifier>sourceCRS</ows:Identifier>'+
+                                                                      '<wps:Data>'+
+                                                                         '<wps:LiteralData>EPSG:3857</wps:LiteralData>'+
+                                                                      '</wps:Data>'+
+                                                                   '</wps:Input>'+
+                                                                   '<wps:Input>'+
+                                                                      '<ows:Identifier>targetCRS</ows:Identifier>'+
+                                                                      '<wps:Data>'+
+                                                                         '<wps:LiteralData>EPSG:4326</wps:LiteralData>'+
+                                                                      '</wps:Data>'+
+                                                                   '</wps:Input>'+
+                                                                '</wps:DataInputs>'+
+                                                                '<wps:ResponseForm>'+
+                                                                   '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
+                                                                      '<ows:Identifier>result</ows:Identifier>'+
+                                                                   '</wps:RawDataOutput>'+
+                                                                '</wps:ResponseForm>'+
+                                                             '</wps:Execute>'+
+                                                          '</wps:Body>'+
+                                                       '</wps:Reference>'+
+                                                    '</wps:Input>'+
+                                                    '<wps:Input>'+
+                                                       '<ows:Identifier>sourceCRS</ows:Identifier>'+
+                                                       '<wps:Data>'+
+                                                          '<wps:LiteralData>EPSG:4326</wps:LiteralData>'+
+                                                       '</wps:Data>'+
+                                                    '</wps:Input>'+
+                                                 '</wps:DataInputs>'+
+                                                 '<wps:ResponseForm>'+
+                                                    '<wps:RawDataOutput mimeType="application/wfs-collection-1.1">'+
+                                                       '<ows:Identifier>result</ows:Identifier>'+
+                                                    '</wps:RawDataOutput>'+
+                                                 '</wps:ResponseForm>'+
+                                              '</wps:Execute>'+
                                             '</wps:Body>'+
                                          '</wps:Reference>'+
                                       '</wps:Input>'+
@@ -186,7 +243,7 @@ var theCaptionControl = function(opt_options) {
     theInfo.innerHTML = '<p style="background-color:red">Danger</p><p style="background-color:black;color:white">Very Danger</p><p style="background-color:green">Good</p>';
     theInfo.style.float = 'right';
     theInfo.style.display = 'none';
-    
+
     var theButton = document.createElement('button');
     theButton.innerHTML = 'i';
     theButton.style.float = 'right';
@@ -199,7 +256,7 @@ var theCaptionControl = function(opt_options) {
       {
           theInfo.style.display = 'none';
       }
-      else 
+      else
       {
           theInfo.style.display = 'block';
       }
