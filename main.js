@@ -254,7 +254,7 @@ var theCaptionControl = function(opt_options) {
     var options = opt_options || {};
 
     var theInfo = document.createElement('div');
-    theInfo.innerHTML = '<p style="background-color:black;color:white">Very Danger</p><p style="background-color:red">Danger</p><p style="background-color:green">Good</p><p style="background-color:gray">no data</p>';
+    theInfo.innerHTML = '<p style="background-color:black;color:white">Very Danger</p><p style="background-color:red;color:white">Danger</p><p style="background-color:green;color:white">Good</p><p style="background-color:gray;color:white">no data</p>';
     theInfo.style.float = 'right';
     theInfo.style.display = 'none';
 
