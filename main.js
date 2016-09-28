@@ -58,7 +58,7 @@ var datawps =
                                                          '<wcs:GetCoverage service="WCS" version="1.1.1">'+
                                                            '<ows:Identifier>geoavalanche:eu_dem_v11_E40N20_3035</ows:Identifier>'+
                                                            '<wcs:DomainSubset>'+
-                                                             '<ows:BoundingBox crs="http://www.opengis.net/gml/srs/epsg.xml#3857">'+
+                                                             '<ows:BoundingBox crs="http://www.opengis.net/gml/srs/epsg.xml#3035">'+
                                                                '<ows:LowerCorner>4000000.0 2000000.0</ows:LowerCorner>'+
                                                                '<ows:UpperCorner>5000000.0 3000000.0</ows:UpperCorner>'+
                                                              '</ows:BoundingBox>'+
@@ -75,9 +75,9 @@ var datawps =
                                                          '<wcs:GetCoverage service="WCS" version="1.1.1">'+
                                                            '<ows:Identifier>geoavalanche:g100_clc12_V18_5_3035</ows:Identifier>'+
                                                            '<wcs:DomainSubset>'+
-                                                             '<ows:BoundingBox crs="http://www.opengis.net/gml/srs/epsg.xml#3857">'+
-                                                               '<ows:LowerCorner>-2700000.0 -3090000.0</ows:LowerCorner>'+
-                                                               '<ows:UpperCorner>1.0048E7 5500000.0</ows:UpperCorner>'+
+                                                             '<ows:BoundingBox crs="http://www.opengis.net/gml/srs/epsg.xml#3035">'+
+                                                               '<ows:LowerCorner>-7305078.365730155 -5058707.879539164</ows:LowerCorner>'+
+                                                               '<ows:UpperCorner>1.5947078365730155E7 1.569560389291389E7</ows:UpperCorner>'+
                                                              '</ows:BoundingBox>'+
                                                            '</wcs:DomainSubset>'+
                                                            '<wcs:Output format="image/tiff"/>'+
