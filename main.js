@@ -56,7 +56,7 @@ var datawps =
                                                      '<wps:Reference mimeType="image/tiff" xlink:href="http://geoserver/wcs" method="POST">'+
                                                        '<wps:Body>'+
                                                          '<wcs:GetCoverage service="WCS" version="1.1.1">'+
-                                                           '<ows:Identifier>geoavalanche:eu_dem_v11_E40N20_3857</ows:Identifier>'+
+                                                           '<ows:Identifier>geoavalanche:eu_dem_v11_E40N20_3035</ows:Identifier>'+
                                                            '<wcs:DomainSubset>'+
                                                              '<ows:BoundingBox crs="http://www.opengis.net/gml/srs/epsg.xml#3857">'+
                                                                '<ows:LowerCorner>4000000.0 2000000.0</ows:LowerCorner>'+
@@ -73,7 +73,7 @@ var datawps =
                                                      '<wps:Reference mimeType="image/tiff" xlink:href="http://geoserver/wcs" method="POST">'+
                                                        '<wps:Body>'+
                                                          '<wcs:GetCoverage service="WCS" version="1.1.1">'+
-                                                           '<ows:Identifier>geoavalanche:g100_clc12_V18_5_3857</ows:Identifier>'+
+                                                           '<ows:Identifier>geoavalanche:g100_clc12_V18_5_3035</ows:Identifier>'+
                                                            '<wcs:DomainSubset>'+
                                                              '<ows:BoundingBox crs="http://www.opengis.net/gml/srs/epsg.xml#3857">'+
                                                                '<ows:LowerCorner>-2700000.0 -3090000.0</ows:LowerCorner>'+
