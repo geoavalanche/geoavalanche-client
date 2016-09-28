@@ -201,17 +201,31 @@ var vectorStyleFunction = function(feature) {
   var properties = feature.getProperties();
   var style = new ol.style.Style({
     fill: new ol.style.Fill({
-      color: [0, 255, 0, 0.5]   //'green'
+      color: [128,128,128, 0.5]
     })
   });
+  if (properties.dangerindex === '0') {
+    style = new ol.style.Style({
+      fill: new ol.style.Fill({
+        color: [0, 255, 0, 0.5]   //'green'
+      })
+    });
+  }
   if (properties.dangerindex === '1') {
+    style = new ol.style.Style({
+      fill: new ol.style.Fill({
+        color: [0, 255, 0, 0.5]   //'green'
+      })
+    });
+  }
+  if (properties.dangerindex === '2') {
     style = new ol.style.Style({
       fill: new ol.style.Fill({
         color: [255, 0, 0, 0.5]   //'red'
       })
     });
   }
-  if (properties.dangerindex === '2') {
+  if (properties.dangerindex === '3') {
     style = new ol.style.Style({
       fill: new ol.style.Fill({
         color: [0, 0, 0, 0.5]   //'black'
@@ -240,7 +254,7 @@ var theCaptionControl = function(opt_options) {
     var options = opt_options || {};
 
     var theInfo = document.createElement('div');
-    theInfo.innerHTML = '<p style="background-color:red">Danger</p><p style="background-color:black;color:white">Very Danger</p><p style="background-color:green">Good</p>';
+    theInfo.innerHTML = '<p style="background-color:red">Danger</p><p style="background-color:black;color:white">Very Danger</p><p style="background-color:green">Good</p><p style="background-color:gray">no data</p>';
     theInfo.style.float = 'right';
     theInfo.style.display = 'none';
 
