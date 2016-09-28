@@ -87,3 +87,13 @@ Otherwise run simply:
 .. code-block:: console
 
    docker-compose up 
+
+
+Credits
+=======
+
+This application has been developed within the `MyGEOSS`_ project, which has received funding from the European Union’s Horizon 2020 research and innovation programme.
+
+.. _MyGEOSS: http://digitalearthlab.jrc.ec.europa.eu/mygeoss/
+
+.. image:: /public/mygeoss.png
