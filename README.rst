@@ -96,4 +96,4 @@ This application has been developed within the `MyGEOSS`_ project, which has rec
 
 .. _MyGEOSS: http://digitalearthlab.jrc.ec.europa.eu/mygeoss/
 
-.. image:: /public/mygeoss.png
+.. image:: /public/mygeoss_logo.png
