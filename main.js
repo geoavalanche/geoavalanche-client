@@ -10,6 +10,7 @@ var ol = require('openlayers');
 var Button = require('react-bootstrap').Button;
 var Navbar = require('react-bootstrap').Navbar;
 var Glyphicon = require('react-bootstrap').Glyphicon;
+var Modal = require('react-bootstrap').Modal;
 var MapzenSearchAddress = require('./components/MapzenSearchAddress');
 var GPXUpload = require('./components/GPXUpload');
 var Mapskin = require('./components/styles/icons/mapskin.css');
@@ -563,9 +564,19 @@ var MyGeoss = React.createClass({
   }
 });
 
+var MyGeossLarge = React.createClass({
+  render: function() {
+    return (
+          <a href="/">
+            <img src="/mygeosslarge.png" height="300" alt="MYGEOSS" />
+          </a>
+    );
+  }
+});
+
 var TheApp = React.createClass({
   getInitialState: function() {
-    return {};
+    return {showInfo: false};
   },
   fitExtent: function(e) {
     e.preventDefault();
@@ -615,7 +626,7 @@ var TheApp = React.createClass({
     draw.on('drawend', onDrawEnd, this);
     if (window.console) console.log("TheApp.drawPoint() ... done");
   },
-
+  
   componentDidMount: function() {
     window.addEventListener('resize', this.handleResize);
   },
@@ -629,6 +640,14 @@ var TheApp = React.createClass({
     //console.log("map.getSize()->",map.getSize(),window.innerWidth,window.innerHeight);
   },
 
+  showInfo() {
+    this.setState({showInfo: true});
+  },
+
+  hideInfo() {
+    this.setState({showInfo: false});
+  },
+  
   render: function() {
     if (window.console) console.log("TheApp.render()");
     return (
@@ -651,7 +670,27 @@ var TheApp = React.createClass({
       <Button onClick={this.deleteFeature}><Glyphicon glyph="trash" /></Button>
       <Button onClick={this.drawLineString}>Draw your route</Button>
       <Button onClick={this.drawPoint}>Draw a point on the map</Button>
+    
+        <Modal
+          {...this.props}
+          show={this.state.showInfo}
+          onHide={this.hideInfo}
+          dialogClassName="custom-modal"
+        >
+          <Modal.Header closeButton>
+          </Modal.Header>
+          <Modal.Body>
+            <MyGeossLarge/>
+            <p>&nbsp;</p>
+            <p>This application has been developed within the MyGEOSS project, which has received funding from the European Union&prime;s Horizon 2020 research and innovation programme</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.hideInfo}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+        
       <GPXUpload onSelectFile={onSelectFile} />
+      <Button onClick={this.showInfo}>Info</Button>
       <MapzenSearchAddress url={config.mapzen.url} onSelectAddress={onSelectAddress} />
       </form>
       </div>
