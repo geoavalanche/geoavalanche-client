@@ -564,12 +564,16 @@ var MyGeoss = React.createClass({
   }
 });
 
-var MyGeossLarge = React.createClass({
+var ModalInfo = React.createClass({
   render: function() {
     return (
-          <a href="/">
-            <img src="/mygeosslarge.png" height="300" alt="MYGEOSS" />
-          </a>
+          <div>
+            <a href="/">
+              <img src="/mygeosslarge.png" height="300" alt="MYGEOSS" />
+            </a>
+            <p>This application has been developed within the MyGEOSS project,
+            which has received funding from the European Union&prime;s Horizon 2020 research and innovation programme</p>
+          </div>
     );
   }
 });
@@ -680,9 +684,7 @@ var TheApp = React.createClass({
           <Modal.Header closeButton>
           </Modal.Header>
           <Modal.Body>
-            <MyGeossLarge/>
-            <p>&nbsp;</p>
-            <p>This application has been developed within the MyGEOSS project, which has received funding from the European Union&prime;s Horizon 2020 research and innovation programme</p>
+            <ModalInfo/>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.hideInfo}>Close</Button>
