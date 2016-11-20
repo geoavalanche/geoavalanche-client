@@ -22,6 +22,8 @@ var Mapskin = require('./components/styles/icons/mapskin.css');
 var SocialButton = require('react-social-button');
 var FacebookButton = require('react-social').FacebookButton;
 var { SocialIcon, SocialIcons } = require('react-social-icons');
+var CustomSocialIcon = require('./components/styles/CustomSocialIcon.jsx');
+//var Radium = require('radium');
 
 var vectorSource;
 var formatwfs_ = new ol.format.WFS();
@@ -809,7 +811,7 @@ var ModalInfo = React.createClass({
                               {/*<Button type="button" className="btn btn-lg btn-fb"><i className="fa fa-facebook left"></i> Facebook</Button>*/}
                               {/*<MyCustomButton></MyCustomButton>*/}
                               <Col xs={1}>
-                                <SocialIcon url="https://twitter.com/geoavalanche" style="transition: fill 170ms ease-in-out; fill: rgb(59, 89, 152);" />
+                                <CustomSocialIcon url="https://twitter.com/geoavalanche" />
                               </Col>
                               <Col xs={1}>
                                 <SocialIcon url="https://facebook.com/geoavalanche" />
