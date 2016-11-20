@@ -36,6 +36,9 @@
     "react": "^0.14.0",
     "react-bootstrap": "^0.29.4",
     "react-dom": "^0.14.0",
-    "react-select": "^1.0.0-beta13"
+    "react-select": "^1.0.0-beta13",
+    "react-social": "^1.6.1",
+    "react-social-button": "^1.0.2",
+    "react-social-icons": "^2.5.1"
   }
 }
