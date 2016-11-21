@@ -37,10 +37,10 @@ var ModalInfo = React.createClass({
                           and <b>earth observation</b> data for the avalanche risk at local scale.</p>
                         <p style={paragStyle}>The use is very simple: users can search for a mountain place 
                           (i.e. a peak or hill location) or enter an address which will be geocoded in 
-                          the map and then draw a point or a route. After a while the result of avalanche
-                          risk index will be displayed as a collection of polygonal shapes or single cicle.
-                          The user can also submit the own preferred trail that has been recorded as 
-                          GPS track during the ascents or retrieved from turistic website in a GPX format.</p> 
+                          the map. After a while the result of avalanche risk index will be displayed as 
+                          a collection of polygonal shapes or single cicle. The user can also submit the 
+                          own preferred trail that has been recorded as GPS track during the ascents or 
+                          retrieved from turistic website in a GPX format.</p> 
                         <p style={paragStyle}>Behind the scene an innovative algorithm is calculated by a 
                           series of geospatial processing which allows to perform <b>terrain avalanche risk </b>  
                           analysis, <b>land cover reclassification</b> and <b>time-series trends</b> of  
@@ -58,8 +58,8 @@ var ModalInfo = React.createClass({
                         <p style={paragStyle}>All the geoprocesses used by this tool are served from the spatial 
                           data infrastructure (SDI) of GeoAvalanche through a set of standard OGC WPS web services.</p>
                         <p style={paragStyle}>GeoAvalanche WPS processes have been atomically designed to achieve
-                          specific functionalities in order to be composable for performing more complex algorithm 
-                          by orchestrating all atomic web services within a workflow.</p>
+                          specific functionalities and can be composable within a workflow for performing more
+                          complex algorithm by orchestrating their atomic web services.</p>
                         <p>That means they can be consumed as single services also from remote clients which 
                           potentially might need some of these particular functions even regardless of the snow 
                           avalanche use case. The available web services under the namespace <b>GeoAvalanche</b> use
@@ -115,13 +115,60 @@ var ModalInfo = React.createClass({
                       <Media.Body>
                         <Media.Heading>Data used</Media.Heading>
                         <p style={paragStyle}></p>
-                        <p style={paragStyle}>It&prime;s a mapping application that fosters the use of location-based
-                          information integrated with crowdsourcing and earth observation data
-                          for the avalanche risk at local scale.</p>
-                        <p style={paragStyle}>Behind the scene a geospatial processing is performed by an innovative 
-                          algorithm which allows to calculate terrain avalanche risk analysis, land cover 
-                          reclassification and time-series trends of snow pack parameters from 
-                          satellite imagery, together with statistical occurrence of incidents at pixel scale.</p>
+                        <Row>
+                        	<Col md={2}>
+                        		<h4><b>Copernicus</b></h4>
+                    		</Col>
+                        	<Col md={10}>
+								<p style={paragStyle}><b>EU-DEM</b> Pan-European elevation 
+									reference <a href="http://land.copernicus.eu/pan-european/satellite-derived-products/eu-dem">
+									products</a>. EU-DEM is the Pan-European elevation reference datasets developed 
+									in the frame of Copernicus Land Monitoring Services. The grid of the EU-DEM 
+									datasets is being used for the terrain avalanche risk analysis to elaborate 
+									slope, aspect and curvature.</p>
+								<p style={paragStyle}>The <b>CORINE Land Cover</b> (CLC) consists of an inventory of 
+									land cover in 44 classes. CLC is produced by the majority of countries by
+									visual interpretation of high resolution satellite imagery using national 
+									in-situ data, satellite image processing, GIS integration and generalisation.
+									The <a href="http://land.copernicus.eu/pan-european/corine-land-cover">
+									2012 version</a> of CLC is the first one embedding the CLC time series in 
+									the Copernicus Land Monitoring Services.</p>
+								<p style={paragStyle}><b>Cryoland</b> Pan-European and regional 
+									Snow/Ice <a href="http://cryoland.enveo.at/services/snow-services">products </a> 
+									are generated from optical and active (radar, SAR) and passive microwave (MW)
+									satellite imagery. Daily Fractional Snow Cover from Optical Satellite Data 
+									covering the Alps and Multi-temporal Wet Snow Covered Area from Radar Data 
+									over the Alps datasets are being used for the time-series trends of snow pack
+									analysis. The products are available as DatasetSeries from a standard-compliant
+									OGC <a href="http://neso1.cryoland.enveo.at/cryoland/ows">Earth Observation 
+									Web Coverage Server</a> (EO-WCS).</p>
+							</Col>
+                        </Row>
+                        <Row>
+                        	<Col md={2}>
+                        		<h4><b>GeoAvalanche</b></h4>
+                    		</Col>
+                        	<Col md={10}>
+								<p style={paragStyle}>The incidents <a href="http://geoavalanche.org/incident/">
+									product</a> is part of the Snow Avalanche Information datasets developed in the
+									frame of <b>GeoAvalanche</b> project (2011-2016) and can be used for free from the 
+									GeoAvalanche web <a href="http://geoavalanche.org/incident/api?task=incidents&by=all">
+									API</a>. Based on crowdsourced data which are reported from the 
+									<a href="https://play.google.com/store/apps/details?id=com.geoavalanche.android.app&hl=en"> mobile app </a>
+									and then fully released under a CC-BY-3.0 of Creative Commons license.</p>
+							</Col>
+                        </Row>
+                        <Row>
+                        	<Col md={2}>
+                        		<h4><b>OpenStreetMap</b></h4>
+                    		</Col>
+                        	<Col md={10}>
+								<p style={paragStyle}><b>OpenStreetMap</b> is an initiative to create and provide free 
+									geographic data, such as maps, street data and geocoding features. OSM datasets 
+									are used to fully support the geocoding engine to match a mountain place with 
+									a point of coordinates on the earth surface.</p>
+							</Col>
+                        </Row>
                       </Media.Body>
                     </Media.ListItem>
                   </Media.List>
