@@ -6,6 +6,7 @@ var Media = require('react-bootstrap').Media;
 var Grid = require('react-bootstrap').Grid;
 var Row = require('react-bootstrap').Row;
 var Col = require('react-bootstrap').Col;
+var Thumbnail = require('react-bootstrap').Thumbnail;
 var SocialButton = require('react-social-button');
 var FacebookButton = require('react-social').FacebookButton;
 var { SocialIcon, SocialIcons } = require('react-social-icons');
@@ -44,7 +45,7 @@ var ModalInfo = React.createClass({
                           series of geospatial processing which allows to perform <b>terrain avalanche risk </b>  
                           analysis, <b>land cover reclassification</b> and <b>time-series trends</b> of  
                           <b> snow pack</b> parameters from satellite imagery, together with statistical 
-                          occurrence of incidents at scale of pixel extent.</p>
+                          occurrence of incidents at the scale of imagery pixel extent.</p>
                         <p style={paragStyle}>Users can increase their <b>awareness</b> of avalanche conditions
                           and avoid to visiting <b>places</b> and <b>routes</b> at high avalanche risk. 
                           The tool helps them to plan their next excursion with safer conditions.</p>
@@ -128,30 +129,72 @@ var ModalInfo = React.createClass({
               </Row>
               <Row>
                 <h2>How to use the tool</h2>
-                <Col md={4}>
-                {/* Block content */}
-                <Media>
-                    <Media.Body>
-                      <Media.Heading>Geocode a mountain</Media.Heading>
-                      <p></p>
-                      <p>This application has been developed within the MyGEOSS project,
-                        which has received funding from the European Union&prime;s Horizon
-                        2020 research and innovation programme</p>
-                    </Media.Body>
-                  </Media>
-                </Col>
-                <Col md={4}>
-                {/* Block content */}
-                <Media>
-                    <Media.Body>
-                      <Media.Heading>Draw on the map</Media.Heading>
-                      <p></p>
-                      <p>This application has been developed within the MyGEOSS project,
-                        which has received funding from the European Union&prime;s Horizon
-                        2020 research and innovation programme</p>
-                    </Media.Body>
-                  </Media>
-                </Col>
+                <Row>
+	                <Col md={4}>
+	                {/* Block content */}
+	                <Media>
+	                    <Media.Body>
+	                      <Media.Heading>Geocode a mountain</Media.Heading>
+	                      <p style={paragStyle}></p>
+	                      <p style={paragStyle}>Enter the name of a mountain peak or place in the search field,
+	                      	then a list of name matching geographic locations will be presented. Click on the
+	                      	peak you are looking for and then wait for the result in the map. The map will zoom
+	                      	in at the level of the bounding box which contains the circle for the
+	                      	avalanche risk with the center at the coordinates of the geocoded mountain.</p>
+	                    </Media.Body>
+	                  </Media>
+	                </Col>
+	                <Col md={4}>
+	                {/* Block content */}
+	                <Media>
+	                    <Media.Body>
+	                      <Media.Heading>Draw on the map</Media.Heading>
+	                      <p style={paragStyle}></p>
+	                      <p style={paragStyle}>Regardless you are looking for a single place or a trail
+	                      	the map can be panned, zoomed in and out. Once you are at your desired level
+	                      	of detail the two buttons <b>DRAW A POINT ON THE MAP</b> and <b>DRAW A ROUTE </b> 
+	                      	can be selected to enable drawing in the map. Click twice after you have drawing
+	                      	a point or a linestring as the picture below and wait for the result in the map.</p>
+	                    </Media.Body>
+	                  </Media>
+	                </Col>
+                </Row>
+                <Row>
+                	<Col xs={6} md={4}>
+						<Thumbnail href="#" alt="171x180" src="/geocode.png" responsive />
+					</Col>
+					<Col xs={6} md={4}>
+						<Thumbnail href="#" alt="171x180" src="/route.png" responsive />
+					</Col>
+                </Row>
+                <Row>
+                	<Col md={6}>
+	                {/* Block content */}
+	                <Media>
+	                    <Media.Body>
+	                      <Media.Heading>Legend</Media.Heading>
+	                      <p style={paragStyle}></p>
+	                      <p style={paragStyle}>The shapes drawn by the tool are styled with
+	                      	different colors based on a custom classification of the avalanche risk
+	                      	outcoming from the server processing. The map has a legend on the
+	                      	information button <b>i</b> in corner that shows classes and associated 
+	                      	colors. There are three classes which correspond to certain assumptions:
+	                      	<b> Good</b> for example might guess that the terrain is actually very 
+	                      	dangerous but isn&prime;t snow covered or it has whatsoever clue of 
+	                      	obvious and evident risk limitations by the land cover classification;
+	                      	<b> Danger</b> means at least one incident has been occurred within
+	                      	that colored shape while <b>Very Danger</b> assumes an avalanche event 
+	                      	happened with a minimum reported danger CONSIDERABLE in the last three
+	                      	days. The class <b>no data</b> means there aren&prime;t sufficient data
+	                      	to perform the processing from the server.
+	                      	</p>
+	                    </Media.Body>
+	                  </Media>
+	                </Col>
+                	<Col xs={2} md={2}>
+						<Thumbnail href="#" alt="100x100" src="/legend.png" responsive />
+					</Col>
+                </Row>
               </Row>
               <Row>
                 <h2>Funding</h2>
