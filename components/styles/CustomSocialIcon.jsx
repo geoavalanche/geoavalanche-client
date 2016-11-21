@@ -18,7 +18,7 @@ const styles = {
 function createIconStyle() {
   return {
     ':hover': {
-      transform: scale(1.1),
+      //transform: scale(1.1),
       boxShadow: '1px 1px 4px rgba(0,0,0,.5)'
     }
   }

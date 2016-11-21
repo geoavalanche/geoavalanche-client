@@ -22,7 +22,7 @@ var Mapskin = require('./components/styles/icons/mapskin.css');
 var SocialButton = require('react-social-button');
 var FacebookButton = require('react-social').FacebookButton;
 var { SocialIcon, SocialIcons } = require('react-social-icons');
-var CustomSocialIcon = require('./components/styles/CustomSocialIcon.jsx');
+//var CustomSocialIcon = require('./components/styles/CustomSocialIcon.jsx');
 //var Radium = require('radium');
 
 var vectorSource;
@@ -811,7 +811,7 @@ var ModalInfo = React.createClass({
                               {/*<Button type="button" className="btn btn-lg btn-fb"><i className="fa fa-facebook left"></i> Facebook</Button>*/}
                               {/*<MyCustomButton></MyCustomButton>*/}
                               <Col xs={1}>
-                                <CustomSocialIcon url="https://twitter.com/geoavalanche" />
+                                <SocialIcon url="https://twitter.com/geoavalanche" />
                               </Col>
                               <Col xs={1}>
                                 <SocialIcon url="https://facebook.com/geoavalanche" />
@@ -822,6 +822,16 @@ var ModalInfo = React.createClass({
                               </Col>
                             </Row>
                           </ButtonToolbar>
+                      </div>
+                      <div>
+                        <Row>
+                          <Col xs={3}>
+                            <h4>Send an email to</h4>
+                          </Col>
+                          <Col xs={3}>
+                            <a href="mailto:info@geobeyond.it?subject=GeoAvalanche&cc=admin@geoavalanche.org"><h4>Geobeyond</h4></a>
+                          </Col>
+                        </Row>
                       </div>
                     </Media.Body>
                   </Media>
