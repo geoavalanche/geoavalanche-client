@@ -509,6 +509,7 @@ var onSelectAddress = function(lat, lng){
 
 var onSelectFile = function(filecontent){
   if (window.console) console.log("TheApp.onSelectFile()", "projection", formatGPX.readProjection(filecontent));
+  document.getElementById('map').style.cursor = 'wait';
   map.addInteraction(select_);
 
   var newfeatures = formatGPX.readFeatures(filecontent, {featureProjection:'EPSG:3857'});
@@ -528,6 +529,7 @@ var onSelectFile = function(filecontent){
         xhr.setRequestHeader('Authorization', 'Basic ' + btoa(config.geoavalanche.auth));
     },
     success: function(data) {
+      document.getElementById('map').style.cursor = 'default';
       if (window.console) console.log('success()');
       var newfeatures = formatWFS.readFeatures(data, {dataProjection:'EPSG:4326', featureProjection:'EPSG:3857'});
       if (window.console) console.log(newfeatures);
@@ -537,6 +539,7 @@ var onSelectFile = function(filecontent){
       map.getView().fit(vector.getSource().getExtent(), map.getSize());
     },
     error: function(xhr, desc, err) {
+      document.getElementById('map').style.cursor = 'default';
       if (window.console) console.log('error()', xhr, desc, err);
     },
     context: this
