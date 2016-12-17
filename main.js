@@ -15,6 +15,7 @@ var MapzenSearchAddress = require('./components/MapzenSearchAddress');
 var GPXUpload = require('./components/GPXUpload');
 var Mapskin = require('./components/styles/icons/mapskin.css');
 var ModalInfo = require('./components/ModalInfo');
+var simplify = require('simplify-js');
 
 var vectorSource;
 var formatwfs_ = new ol.format.WFS();
@@ -516,6 +517,15 @@ var onSelectFile = function(filecontent){
   if (window.console) console.log(newfeatures);
 
   var theColl = JSON.parse(formatGeoJSON.writeFeatures(newfeatures));
+
+  var fullpoints = theColl.features[0].geometry.coordinates[0].map(function(rec){
+    return {x:rec[0], y:rec[1]};
+  });
+  var shortpoints = simplify(fullpoints,3);
+  var shortpoints2 = shortpoints.map(function(rec){
+    return [rec.x, rec.y];
+  });
+  theColl.features[0].geometry.coordinates[0]=shortpoints2;
 
   var datawps_ = datawps.replace("XXXX", JSON.stringify(theColl));
 
