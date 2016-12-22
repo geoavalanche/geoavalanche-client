@@ -295,12 +295,59 @@ var theCaptionControl = function(opt_options) {
 };
 ol.inherits(theCaptionControl, ol.control.Control);
 
+var openSnowmapLayer = new ol.layer.Tile({
+  source: new ol.source.OSM({
+    attributions: [
+      new ol.Attribution({
+                html: '&copy; ' +
+                    '<a href="http://www.opensnowmap.org/">Opensnow.org</a> '
+      }),
+      ol.source.OSM.ATTRIBUTION
+    ],
+    crossOrigin: null,
+    url: 'https://www.procrastinatio.org/cgi-bin/proxy.cgi?url=http://www.opensnowmap.org/opensnowmap-overlay/{z}/{x}/{y}.png'
+  })
+});
+
+var openTopomapLayer = new ol.layer.Tile({
+    title: 'OSM',
+    type: 'base',
+    visible: true,
+    source: new ol.source.XYZ({
+        attributions: [
+          new ol.Attribution({
+                    html: '&copy; ' +
+                        '<a href="http://www.opentopomap.org/">opentopomap.org</a> '
+          }),
+          ol.source.OSM.ATTRIBUTION
+        ],
+        url: '//{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png'
+    })
+});
+
+var stamenTerrainLayer = new ol.layer.Tile({
+    title: 'OSM',
+    type: 'base',
+    visible: true,
+    source: new ol.source.XYZ({
+        attributions: [
+          new ol.Attribution({
+                    html: '&copy; ' +
+                        '<a href="http://maps.stamen.com/">maps.stamen.com</a> '
+          }),
+          ol.source.OSM.ATTRIBUTION
+        ],
+        url: '//tile.stamen.com/terrain/{z}/{x}/{y}.jpg'
+    })
+});
+
 var map = new ol.Map({
   target: 'map',
   layers: [
     new ol.layer.Tile({
       source: new ol.source.OSM()
     }),
+    openTopomapLayer,
     vector
   ],
   view: new ol.View({
@@ -521,7 +568,7 @@ var onSelectFile = function(filecontent){
   var fullpoints = theColl.features[0].geometry.coordinates[0].map(function(rec){
     return {x:rec[0], y:rec[1]};
   });
-  var shortpoints = simplify(fullpoints,3);
+  var shortpoints = simplify(fullpoints,200);
   var shortpoints2 = shortpoints.map(function(rec){
     return [rec.x, rec.y];
   });
