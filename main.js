@@ -193,12 +193,7 @@ else if (env === "staging") {
 }
 else config = require('./static.json');
 
-//var config = require("./static.json"); //static configuration
-//var config  = require('./env/' + 'development' + '.js'); //doesn't work
-//var config = require('./env' + '/' + env + '.js'); //doesn't work
-//var config  = require("./env/development.js"); //works
-
-console.log(config.geoavalanche);
+//console.log(config.geoavalanche);
 
 var vectorStyleFunction = function(feature) {
   var properties = feature.getProperties();
