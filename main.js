@@ -16,6 +16,8 @@ var GPXUpload = require('./components/GPXUpload');
 var Mapskin = require('./components/styles/icons/mapskin.css');
 var ModalInfo = require('./components/ModalInfo');
 var simplify = require('simplify-js');
+var LayerSwitcher = require('./node_modules/ol-layerswitcher/src/ol3-layerswitcher');
+var Custom = require('./components/styles/custom.css');
 
 var vectorSource;
 var formatwfs_ = new ol.format.WFS();
@@ -241,7 +243,7 @@ vectorSource = new ol.source.Vector({
 });
 
 var vector = new ol.layer.Vector({
-    title: 'xxx',
+    title: 'Result',
     source: vectorSource,
     style: vectorStyleFunction
 });
@@ -291,6 +293,9 @@ var theCaptionControl = function(opt_options) {
 ol.inherits(theCaptionControl, ol.control.Control);
 
 var openSnowmapLayer = new ol.layer.Tile({
+  title: 'OpenSnowMap',
+  type: 'base',
+  visible: true,
   source: new ol.source.OSM({
     attributions: [
       new ol.Attribution({
@@ -305,7 +310,7 @@ var openSnowmapLayer = new ol.layer.Tile({
 });
 
 var openTopomapLayer = new ol.layer.Tile({
-    title: 'OSM',
+    title: 'OpenTopoMap',
     type: 'base',
     visible: true,
     source: new ol.source.XYZ({
@@ -321,7 +326,7 @@ var openTopomapLayer = new ol.layer.Tile({
 });
 
 var stamenTerrainLayer = new ol.layer.Tile({
-    title: 'OSM',
+    title: 'Stamen Terrain',
     type: 'base',
     visible: true,
     source: new ol.source.XYZ({
@@ -336,13 +341,21 @@ var stamenTerrainLayer = new ol.layer.Tile({
     })
 });
 
+//group of basemaps
+var basemaps_group = new ol.layer.Group({
+  title: 'Basemaps',
+  layers: [
+    openSnowmapLayer,
+    stamenTerrainLayer,
+    openTopomapLayer
+  ]
+});
+
 var map = new ol.Map({
   target: 'map',
   layers: [
-    new ol.layer.Tile({
-      source: new ol.source.OSM()
-    }),
-    openTopomapLayer,
+    //openTopomapLayer,
+    basemaps_group,
     vector
   ],
   view: new ol.View({
@@ -360,6 +373,16 @@ var map = new ol.Map({
       new theCaptionControl()
   ])
 });
+
+//definition of LayerSwitcher object
+var layerSwitcher = new LayerSwitcher({
+  tipLabel: 'layer switcher'
+});
+//var layerSwitcher = ol.control.LayerSwitcher;
+//add layerSwitcher control to the map
+map.addControl(layerSwitcher);
+//Show the control as soon as page is loaded
+layerSwitcher.showPanel();
 
 var selectedStyleFunction = function(feature, resolution) {
   var properties = feature.getProperties();
