@@ -228,7 +228,7 @@ var vectorStyleFunction = function(feature) {
   if (properties.dangerindex === '3') {
     style = new ol.style.Style({
       fill: new ol.style.Fill({
-        color: [141, 160, 203, 0.5]   //'custom blue'
+        color: [102, 51, 0, 0.5]   //'custom brown'
       })
     });
   }
@@ -254,7 +254,7 @@ var theCaptionControl = function(opt_options) {
     var options = opt_options || {};
 
     var theInfo = document.createElement('div');
-    theInfo.innerHTML = '<p style="background-color:#8da0cb;color:white">Very Danger</p><p style="background-color:#fc8d62;color:white">Danger</p><p style="background-color:#66c2a5;color:white">Good</p><p style="background-color:gray;color:white">no data</p>';
+    theInfo.innerHTML = '<p style="background-color:#663300;color:white">Very Danger</p><p style="background-color:#fc8d62;color:white">Danger</p><p style="background-color:#66c2a5;color:white">Good</p><p style="background-color:gray;color:white">no data</p>';
     theInfo.style.float = 'right';
     theInfo.style.display = 'none';
 
@@ -392,7 +392,7 @@ var selectedStyleFunction = function(feature, resolution) {
       width: 3
     }),
     fill: new ol.style.Fill({
-      color: [0, 255, 0, 0.5]   //'green'
+      color: [102, 194, 165, 0.5]   //custom 'green'
     })
   });
   if (properties.dangerindex === '1') {
@@ -402,7 +402,7 @@ var selectedStyleFunction = function(feature, resolution) {
         width: 3
       }),
       fill: new ol.style.Fill({
-        color: [255, 0, 0, 0.5]   //'red'
+        color: [252, 141, 98, 0.5]   //custom 'red'
       })
     });
   }
@@ -413,7 +413,7 @@ var selectedStyleFunction = function(feature, resolution) {
         width: 3
       }),
       fill: new ol.style.Fill({
-        color: [0, 0, 0, 0.5]   //'black'
+        color: [102, 51, 0, 0.5]   //custom 'brown'
       })
     });
   }
