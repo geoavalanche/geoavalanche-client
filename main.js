@@ -1,9 +1,3 @@
-// const React = require('react');
-// const ReactDOM = require('react-dom');
-// const ol = require('openlayers');
-// const Button = require('react-bootstrap').Button;
-// const Glyphicon = require('react-bootstrap').Glyphicon;
-// import SearchAddress from './components/SearchAddress';
 var React = require('react');
 var ReactDOM = require('react-dom');
 var ol = require('openlayers');
@@ -650,7 +644,7 @@ var MyGeoss = React.createClass({
     return (
           <FacebookButton title="Share via Facebook" message={message} appId={facebookAppId} url={link} element="a" className="btn btn-social-icon btn-facebook">
               <i className="fa fa-facebook-square"/>
-          </FacebookButton>   
+          </FacebookButton>
     );
   }
 });*/}
@@ -667,7 +661,7 @@ var MyGeoss = React.createClass({
     return (
       <SocialIcons urls={urls} />
     );
-    
+
   }
 });*/}
 
@@ -723,7 +717,7 @@ var TheApp = React.createClass({
     draw.on('drawend', onDrawEnd, this);
     if (window.console) console.log("TheApp.drawPoint() ... done");
   },
-  
+
   componentDidMount: function() {
     window.addEventListener('resize', this.handleResize);
   },
@@ -744,13 +738,18 @@ var TheApp = React.createClass({
   hideInfo() {
     this.setState({showInfo: false});
   },
-  
+
   render: function() {
+
+    var navbar = {
+        marginBottom: "0em"
+    };
+    
     if (window.console) console.log("TheApp.render()");
     return (
       <div>
       <form>
-      <Navbar>
+      <Navbar style={navbar}>
         <Navbar.Header>
           <Navbar.Brand>
             <Logo></Logo>
@@ -767,7 +766,7 @@ var TheApp = React.createClass({
       <Button onClick={this.deleteFeature}><Glyphicon glyph="trash" /></Button>
       <Button onClick={this.drawLineString}>Draw your route</Button>
       <Button onClick={this.drawPoint}>Draw a point on the map</Button>
-    
+
         <Modal
           {...this.props}
           show={this.state.showInfo}
@@ -784,7 +783,7 @@ var TheApp = React.createClass({
             <Button onClick={this.hideInfo}>Close</Button>
           </Modal.Footer>
         </Modal>
-        
+
       <GPXUpload onSelectFile={onSelectFile} />
       <Button onClick={this.showInfo}>Info</Button>
       <MapzenSearchAddress url={config.mapzen.url} onSelectAddress={onSelectAddress} />
